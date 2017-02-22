@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var dm = require('../models/datamanager');
+var dm = require('../models/dataManager');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
