@@ -1,0 +1,27 @@
+{
+  "name": "verkefni6",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "set BASEURL=http://api.kvikmyndir.is&& set BASEURL2=https://api.themoviedb.org/3&& node ./bin/www",
+    "lint": "node ./node_modules/eslint/bin/eslint.js ./src/*/*.js"
+  },
+  "dependencies": {
+    "apicache": "^0.7.1",
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.13.4",
+    "morgan": "~1.7.0",
+    "pug": "^2.0.0-beta6",
+    "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.0",
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1"
+  }
+}
