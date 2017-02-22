@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/api/ids', function(req, res, next){
   var ids = dm.getBarIds();
-  res.send("hi");
+  res.send(ids);
 });
 
 router.post('/api/bars',function(req, res, next){
