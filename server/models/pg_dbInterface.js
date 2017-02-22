@@ -63,7 +63,7 @@ self.init = function() {
 };
 
 
-self.getWords = function(deliverData, type)
+self.getBars = function(deliverData, bar_ids)
 {  
   pool.connect(function(err, client, done) {
   if(err) {
@@ -115,25 +115,25 @@ self.getWords = function(deliverData, type)
 
 }
 
-self.getSentences = function(deliverData, type)
+self.getBarIds = function(deliverData)
 {  
   pool.connect(function(err, client, done) {
   if(err) {
     return console.error('error fetching client from pool', err);
   }
   
-  var query = client.query('SELECT * FROM SENTENCES');
+  var query = client.query('SELECT _id FROM BARS');
 
-  var sentences = [];
+  var bar_ids = [];
   
   query.on('row', function(row, result) {
 
-    sentences[row.type] = JSON.parse(row.structure);
+    bar_ids.push(row._id);
 
     });
     query.on('end', function(result) {
-      
-      deliverData(sentences, type);
+
+      deliverData(bar_ids);
     });
  
   done();
@@ -141,6 +141,8 @@ self.getSentences = function(deliverData, type)
   });
 
 }
+
+
 
 
 self.loadInitialData = function() {
@@ -192,12 +194,6 @@ self.loadInitialData = function() {
 
 };
 
-
-
-var sentences = 
-{
-  wh_question : {wh_question: {min : 1, max : 1}, verb : {min : 1, max : 1}, adjective : {min : 1, max : 1}, noun: {min : 1, max : 1},},  
-}
 
 
 };
