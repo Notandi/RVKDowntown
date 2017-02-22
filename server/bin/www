@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 
-var app = require('../src/app');
-var debug = require('debug')('synilausn:server');
+var app = require('../app');
+var debug = require('debug')('server:server');
 var http = require('http');
 
 /**
