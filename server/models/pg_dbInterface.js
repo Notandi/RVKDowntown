@@ -3,8 +3,7 @@ var pg_dbInterface = function() {
   var self = this;
   var pg = require('pg');
   const url = require('url');
-  var fs  = require("fs");
-  var sentiment = require('sentiment');  
+  var fs  = require("fs");  
 
 console.log('entered pg_dbInterface');
 
@@ -26,7 +25,7 @@ const config = {
 
   //LOCAL STUFF
   const env_db_loc = process.env.DATABASE_URL;
-  const db_loc = 'scripter' || process.env.DATABASE_URL;
+  const db_loc = 'rvkdowntown' || process.env.DATABASE_URL;
 
   var config = {
   user: 'postgres', //env var: PGUSER 
@@ -70,43 +69,34 @@ self.getBars = function(deliverData, bar_ids)
     return console.error('error fetching client from pool', err);
   }
   
-  var query = client.query('SELECT * FROM WORDS');
+  
+  var bars = [];
 
-  var words = [];
-  var hasGrouping = false;
+  var params = [];
+  for(var i = 1; i <= bar_ids.length; i++) {
+    params.push('$' + i);
+  }
+  var statement = 'SELECT * FROM BARS WHERE _id IN (' + params.join(',') + ')';
+
+  var query = client.query(statement,bar_ids);
   
   query.on('row', function(row, result) {
-      var word = {
-          word : row.word,
-          sentiment : row.sentiment,
-          grouping : row.grouping,
-          type : row.type,
-        }
-      
-      hasGrouping = word.grouping !== 'none';
 
-      if(!words.hasOwnProperty(word.sentiment))
-      {
-        words[word.sentiment] = [];
-      } 
-
-      if(hasGrouping)
-      {        
-        if(!words[word.sentiment].hasOwnProperty(word.grouping)) words[word.sentiment][word.grouping] = [];          
-        words[word.sentiment][word.grouping].push(word);
+    var bar = {
+        id : row._id,
+        name : row.name,
+        menu : row.menu,
+        image : row.image,
+        coords : row.coords,
+        link : row.link,
+        description : row.description,
       }
-
-      else
-      {
-        if(!words[word.sentiment].hasOwnProperty(word.type)) words[word.sentiment][word.type] = [];          
-        words[word.sentiment][word.type].push(word);
-      }
-
+    bars.push(bar);
 
     });
     query.on('end', function(result) {
       
-      deliverData(words, type);
+      deliverData(bars);
     });
  
   done();

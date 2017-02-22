@@ -1,0 +1,4 @@
+CREATE TABLE BARS(_id SERIAL PRIMARY KEY, name TEXT, menu TEXT, image TEXT, coords TEXT, link TEXT, description TEXT);
+DROP TABLE BARS;
+INSERT INTO BARS(name,menu,image,coords,link,description) VALUES('austur', 'Tequila 1500, G&T 2000, Vodka&Redbull 1600', 'placeholder.jpg', '-4254452, 02452345', 'somelink.com', 'tappabar');
+INSERT INTO BARS(name,menu,image,coords,link,description) VALUES('vestur', 'Tequila 1500, G&T 2000, Vodka&Redbull 1600', 'placeholder.jpg', '-4254452, 02452345', 'somelink.com', 'tappabar');
