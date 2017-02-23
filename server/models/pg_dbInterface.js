@@ -110,7 +110,7 @@ var pg_dbInterface = function() {
               eventQuery.on('end', function(result) {
                 deliverData(bars);
             });
-                          
+
             });
 
             done();
@@ -204,6 +204,7 @@ var pg_dbInterface = function() {
                     word = words[type][i];
                     word = word.replace(/\r/, ""); //Remove CR-LF symbol
                     sentiment_value = sentiment(word).score.toString();
+                    
                     if (word.startsWith('wh') && type === 'pronoun') grouping = 'wh_question';
                     client.query('INSERT INTO WORDS(word, type, sentiment, grouping) VALUES($1,$2,$3,$4)', [word, type, sentiment_value, grouping]);
                 }

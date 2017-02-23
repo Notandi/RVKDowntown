@@ -7,7 +7,7 @@ var dataManager = function() {
 
  /**
  * Gets all of the bar ids
- * 
+ *  
  * @param {callback} handleData - delivers the bar_ids
  */
   self.getBarIds = function(handleData){
@@ -18,6 +18,7 @@ var dataManager = function() {
     }
     databaseInterface.getBarIds(deliverBarIds);
   };
+
 
  /**
  * Gets a number of bars equal to the length of bar_ids
