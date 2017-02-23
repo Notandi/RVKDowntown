@@ -3,6 +3,18 @@ var router = express.Router();
 var datamanagerModule = require('../models/dataManager');
 var dataManager = new datamanagerModule();
 
+
+//name,menu,image,coords,link,description,rating
+/*
+var bar = {
+	name: 'austur',
+	menu: 'fullt af drykkjum driiiininnknkkkkkkk fyrir alla nog af drykkjum',
+	description : 'flott og geðveikt snilld gott',
+}
+
+dataManager.updateBar(bar);
+*/
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });

@@ -46,6 +46,24 @@ var dataManager = function() {
     databaseInterface.insertEvent(event,bar);
   };
 
+ /**
+ * Adds a bar to the database
+ *  
+ * @param {object} bar - Information about the bar
+ */
+  self.addBar = function(bar) {
+    databaseInterface.insertBar(bar);
+  };
+
+  /**
+ * Updates a bars information
+ *  
+ * @param {object} bar - Information about the bar
+ */
+  self.updateBar = function(bar) {
+    databaseInterface.updateBar(bar);
+  };
+
 };
 
 

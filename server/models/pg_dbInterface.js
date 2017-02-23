@@ -87,6 +87,7 @@ var pg_dbInterface = function() {
                     coords: row.coords,
                     link: row.link,
                     description: row.description,
+                    rating: row.rating,
                     events : [],
                 }
                 bars.push(bar);
@@ -136,7 +137,7 @@ var pg_dbInterface = function() {
             done();
         });
 
-    }
+    };
 
 
 
@@ -177,6 +178,73 @@ var pg_dbInterface = function() {
         });
     };
 
+    self.insertBar = function(bar){
+      pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('error fetching client from pool', err);
+            }
+            var statement = 'INSERT INTO BARS(name,menu,image,coords,link,description,rating) VALUES($1,$2,$3,$4,$5,$6,$7)';
+            
+            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6};
+            var barData = [];
+            for (property in bar) {
+                barData[insertOrder[property]] = bar[property];
+            }
+
+            client.query(statement,barData);
+
+            done();
+        });
+    };
+
+
+    self.updateBar = function(bar){
+      pool.connect(function(err, client, done) {
+            if (err) {
+                return console.error('error fetching client from pool', err);
+            }
+
+            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6};
+            var barColumns = [];
+            var barData = [];
+            for (property in bar) {
+                barColumns[insertOrder[property]] = property;
+                barData[insertOrder[property]] = bar[property];
+            }
+
+            //Removing undefined variables from arrays, in case a full bar object was not given
+            for (var i = 0; i < barColumns.length; i++) {
+              if (barColumns[i] == undefined) {         
+                barColumns.splice(i, 1);
+                barData.splice(i,1);
+                i--;
+              }
+            }
+            
+            var statement = 'UPDATE BARS SET ';
+            barData.reverse();
+            barColumns.reverse();  
+            
+            for (var i = 0; i < barColumns.length-1; i++) {
+                console.log('statement so far: ' + statement);
+                statement += barColumns[i] + ' = $'+(i+1)+',';                
+            }
+
+            //Getting rid of the extra comma at the end
+            statement = statement.substring(0, statement.length-1);
+            statement += ' WHERE name = $'+barColumns.length;
+            
+            console.log('Executing the following statement: ' + statement);
+            console.log('With this data: ');
+            console.log(barData);
+            console.log('columns:')
+            console.log(barColumns);
+            client.query(statement,barData);
+
+            done();
+        });
+    };
+
 
     self.loadInitialData = function() {
 
@@ -204,7 +272,7 @@ var pg_dbInterface = function() {
                     word = words[type][i];
                     word = word.replace(/\r/, ""); //Remove CR-LF symbol
                     sentiment_value = sentiment(word).score.toString();
-                    
+
                     if (word.startsWith('wh') && type === 'pronoun') grouping = 'wh_question';
                     client.query('INSERT INTO WORDS(word, type, sentiment, grouping) VALUES($1,$2,$3,$4)', [word, type, sentiment_value, grouping]);
                 }
