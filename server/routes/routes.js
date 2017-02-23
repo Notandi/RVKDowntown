@@ -24,6 +24,7 @@ var event =
 	endTime : '17:00 GMT +00',
 }
 */
+
 //dataManager.addEvent(event,bar);
 
 /* GET home page. */
