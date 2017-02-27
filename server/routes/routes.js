@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 var datamanagerModule = require('../models/dataManager');
 var dataManager = new datamanagerModule();
-
+dataManager.init();
+//var barGetterModule = require('../models/barGetter');
+//var barGetter = new barGetterModule();
 
 //name,menu,image,coords,link,description,rating
 /*

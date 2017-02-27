@@ -3,6 +3,21 @@ var dataManager = function() {
   var self = this;
   var databaseInterfaceModule = require('./pg_dbInterface');
   var databaseInterface = new databaseInterfaceModule();
+  var barGetterModule = require('../models/barGetter');
+  var barGetter = new barGetterModule(databaseInterface);
+
+
+     /**
+   * Fills the database with bars if it is empty
+   *  
+   */
+  self.init = function(){
+    function loadData(bar_ids)
+    {
+      if(bar_ids.length === 0) barGetter.loadInitialBarData();
+    }
+    self.getBarIds(loadData);
+  };
 
 
  /**
@@ -13,7 +28,6 @@ var dataManager = function() {
   self.getBarIds = function(handleData){
     
     function deliverBarIds(bar_ids){
-      console.log(bar_ids);
       handleData(bar_ids);
     }
     databaseInterface.getBarIds(deliverBarIds);
@@ -56,9 +70,9 @@ var dataManager = function() {
   };
 
   /**
- * Updates a bars information
+ * Updates a bars information 
  *  
- * @param {object} bar - Information about the bar
+ * @param {object} bar - Information about the bar, *needs* to contain a name property
  */
   self.updateBar = function(bar) {
     databaseInterface.updateBar(bar);

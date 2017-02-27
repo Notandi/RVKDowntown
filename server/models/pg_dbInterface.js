@@ -37,30 +37,12 @@ var pg_dbInterface = function() {
 
     var pool = new pg.Pool(config);
 
-    self.init = function() {
-        console.log('called init');
-        pool.connect(function(err, client, done) {
-            if (err) {
-                return console.error('error fetching client from pool', err);
-            }
-            var statement = 'SELECT * FROM BARS';
-            var query = client.query(statement);
-            var numOfBarsFound = 0;
-            query.on('row', function(row, result) {
-                numOfBarsFound++;
-            });
-            query.on('end', function(result) {
-                if (numOfBarsFound < 1) self.loadInitialData(); //If the database is empty, load data  
-
-            });
-
-            done();
-
-        });
-
-    };
-
-
+    /**
+   * Gets a number of bars equal to the length of bar_ids with each bar object also containing all of the events for that bar
+   *
+   * @param {int[]} bar_ids  - ids of the bars to be fetched
+   * @param {callback} deliverData - handles the bars data
+   */
     self.getBars = function(deliverData, bar_ids) {
         pool.connect(function(err, client, done) {
             if (err) {
@@ -88,6 +70,8 @@ var pg_dbInterface = function() {
                     link: row.link,
                     description: row.description,
                     rating: row.rating,
+                    opens: row.opens,
+                    closes: row.closes,
                     events : [],
                 }
                 bars.push(bar);
@@ -120,6 +104,10 @@ var pg_dbInterface = function() {
 
     }
 
+    /**
+   * Gets an array containing the ids of all the bars in the database
+   * @param {callback} deliverData - handles the bars data
+   */
     self.getBarIds = function(deliverData) {
         pool.connect(function(err, client, done) {
             if (err) {
@@ -140,7 +128,12 @@ var pg_dbInterface = function() {
     };
 
 
-
+     /**
+   * Inserts an event into the database
+   *
+   * @param {object} event  - information about the event
+   * @param {string} bar - name of the bar the event is held in
+   */
     self.insertEvent = function(event, bar) {
 
         pool.connect(function(err, client, done) {
@@ -178,14 +171,20 @@ var pg_dbInterface = function() {
         });
     };
 
+
+     /**
+   * Inserts a bar into the database
+   *
+   * @param {object} bar  - information about the bar
+   */
     self.insertBar = function(bar){
       pool.connect(function(err, client, done) {
             if (err) {
                 return console.error('error fetching client from pool', err);
             }
-            var statement = 'INSERT INTO BARS(name,menu,image,coords,link,description,rating) VALUES($1,$2,$3,$4,$5,$6,$7)';
+            var statement = 'INSERT INTO BARS(name,menu,image,coords,link,description,rating,opens,closes,photo) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
             
-            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6};
+            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, photo: 9};
             var barData = [];
             for (property in bar) {
                 barData[insertOrder[property]] = bar[property];
@@ -197,19 +196,26 @@ var pg_dbInterface = function() {
         });
     };
 
-
+     /**
+   * Updates a bar in the database
+   *
+   * @param {object} bar  - information about the bar
+   */
     self.updateBar = function(bar){
       pool.connect(function(err, client, done) {
             if (err) {
                 return console.error('error fetching client from pool', err);
             }
 
-            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6};
+            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, photo: 9};
             var barColumns = [];
             var barData = [];
             for (property in bar) {
+              if(insertOrder.hasOwnProperty(property))
+              {
                 barColumns[insertOrder[property]] = property;
                 barData[insertOrder[property]] = bar[property];
+              }              
             }
 
             //Removing undefined variables from arrays, in case a full bar object was not given
@@ -234,59 +240,13 @@ var pg_dbInterface = function() {
             statement = statement.substring(0, statement.length-1);
             statement += ' WHERE name = $'+barColumns.length;
             
-            console.log('Executing the following statement: ' + statement);
-            console.log('With this data: ');
-            console.log(barData);
-            console.log('columns:')
-            console.log(barColumns);
+   
             client.query(statement,barData);
 
             done();
         });
     };
 
-
-    self.loadInitialData = function() {
-
-        console.log('called loadInitialData');
-        pool.connect(function(err, client, done) {
-            if (err) {
-                return console.error('error fetching client from pool', err);
-            }
-
-            var words = [];
-            var grouping = 'none';
-            var word = '';
-            var sentiment_value = 0;
-
-            words['noun'] = fs.readFileSync('./word_textfiles/nouns/all_nouns.txt').toString().split('\n');
-            words['pronoun'] = fs.readFileSync('./word_textfiles/pronouns/all_pronouns.txt').toString().split('\n');
-            words['adverb'] = fs.readFileSync('./word_textfiles/adverbs/all_adverbs.txt').toString().split('\n');
-            words['verb'] = fs.readFileSync('./word_textfiles/verbs/all_verbs.txt').toString().split('\n');
-            words['adjective'] = fs.readFileSync('./word_textfiles/adjectives/all_adjectives.txt').toString().split('\n');
-            words['preposition'] = fs.readFileSync('./word_textfiles/prepositions/all_prepositions.txt').toString().split('\n');
-
-            for (var type in words) {
-                for (var i = 0; i < words[type].length; i++) {
-                    grouping = 'none';
-                    word = words[type][i];
-                    word = word.replace(/\r/, ""); //Remove CR-LF symbol
-                    sentiment_value = sentiment(word).score.toString();
-
-                    if (word.startsWith('wh') && type === 'pronoun') grouping = 'wh_question';
-                    client.query('INSERT INTO WORDS(word, type, sentiment, grouping) VALUES($1,$2,$3,$4)', [word, type, sentiment_value, grouping]);
-                }
-            }
-
-            for (var type in sentences) {
-                console.log('inserting type: ' + type);
-
-                client.query('INSERT INTO SENTENCES(type, structure) VALUES($1,$2)', [type, JSON.stringify(sentences[type])]);
-            }
-
-            done();
-        });
-    };
 
 };
 
