@@ -5,18 +5,22 @@ var dataManager = function() {
   var databaseInterface = new databaseInterfaceModule();
   var barGetterModule = require('./barGetter');
   var barGetter = new barGetterModule(databaseInterface);
+  var fbManager = require('./fbManager');
 
-
+  fbManager();
+  
      /**
    * Fills the database with bars if it is empty
    *  
-   */
+   */ 
   self.init = function(){
     function loadData(bar_ids)
     {
       if(bar_ids.length === 0) barGetter.loadInitialBarData();
     }
     self.getBarIds(loadData);
+
+    fbManager.init();
   };
 
 
@@ -76,6 +80,19 @@ var dataManager = function() {
  */
   self.updateBar = function(bar) {
     databaseInterface.updateBar(bar);
+  };
+
+  self.updateEvents = function() {
+    function insertEvents(events){
+      for(property in events){
+        for(var i = 0; i<events[property].length; i++){
+          self.addEvent(events[property][i],property);
+        }
+  
+      }
+    }
+    fbManager.updateEvents(insertEvents);
+
   };
 
 };
