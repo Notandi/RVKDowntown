@@ -20,7 +20,7 @@ var dataManager = function() {
     }
     self.getBarIds(loadData);
 
-    fbManager.init();
+    //fbManager.init();
   };
 
 
@@ -82,17 +82,83 @@ var dataManager = function() {
     databaseInterface.updateBar(bar);
   };
 
+
+  self.reformatObject = function(type, obj) {
+    if(type === 'bars')
+    {
+      var bars = [];
+      for(var i = 0; i<obj.length; i++)
+      {
+        var opening_hours = obj[i].opening_hours;
+        var opens = {};
+        var closes = {};
+
+        var k = 2;
+        for(property in opening_hours)
+        {
+          if(k%2 === 0)
+          {
+            opens[property] = opening_hours[property];                        
+          }
+
+          else
+          {
+            closes[property] = opening_hours[property];
+          }
+
+          k++
+        }
+
+        var bar = {
+          name : obj[i].name,
+          opens : JSON.stringify(opens),
+          closes : JSON.stringify(closes),
+          
+        }
+
+      }
+
+    }
+
+
+  };
+  
+  /**
+  * Updates all of the bars with events
+  * 
+  */
   self.updateEvents = function() {
     function insertEvents(events){
       for(property in events){
         for(var i = 0; i<events[property].length; i++){
           self.addEvent(events[property][i],property);
         }
-  
       }
     }
     fbManager.updateEvents(insertEvents);
+  };
 
+
+ /**
+ * Updates all of the bars
+ * 
+ */
+  self.updateBars = function() {
+    function updateBars(bars){
+      for(var property in bars)
+      {
+        var bar = {};
+        bar[name] = property;
+        for(var element in bars[property])
+        {
+          bar[element] = bars[property][element];
+        }
+        self.updateBar(bar);
+      }
+    }
+
+    fbManager.updateBars(updateBars);
+    self.updateEvents();
   };
 
 };

@@ -31,7 +31,7 @@ var pg_dbInterface = function() {
         database: db_loc, //env var: PGDATABASE 
         password: 'root', //env var: PGPASSWORD 
         port: 5432, //env var: PGPORT 
-        max: 10, // max number of clients in the pool 
+        max: 20, // max number of clients in the pool 
         idleTimeoutMillis: 300000000, // how long a client is allowed to remain idle before being closed 
     };
 
@@ -66,7 +66,7 @@ var pg_dbInterface = function() {
                     name: row.name,
                     menu: row.menu,
                     image: row.image,
-                    coords: row.coords,
+                    coords: JSON.parse(row.coords),
                     link: row.link,
                     description: row.description,
                     rating: row.rating,
@@ -80,7 +80,7 @@ var pg_dbInterface = function() {
             query.on('end', function(result) {
               //Adding events to all bars            
               var eventStatement = 'SELECT * FROM EVENTS WHERE _id IN (SELECT _event_id FROM EVENTS_IN_BAR WHERE _bar_id IN (' + params.join(',') + '))';
-              var eventQuery = client.query(eventStatement, bar_ids);              
+              var eventQuery = client.query(eventStatement, bar_ids);
               eventQuery.on('row', function(row, result) {
 
                 for(var i = 0; i<bars.length; i++)

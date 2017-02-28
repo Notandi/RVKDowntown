@@ -3,18 +3,22 @@ var router = express.Router();
 var datamanagerModule = require('../models/dataManager');
 var dataManager = new datamanagerModule();
 dataManager.init();
-//var barGetterModule = require('../models/barGetter');
-//var barGetter = new barGetterModule();
 
-//name,menu,image,coords,link,description,rating
 /*
-var bar = {
-	name: 'austur',
-	menu: 'fullt af drykkjum driiiininnknkkkkkkk fyrir alla nog af drykkjum',
-	description : 'flott og geðveikt snilld gott',
+function log(bar_ids)
+{
+	function log2(bars)
+	{
+		for(var i = 0; i<bars.length; i++)
+		{
+			console.log(bars[i].name);
+		}
+	}
+
+	dataManager.getBars(bar_ids,log2);
 }
 
-dataManager.updateBar(bar);
+dataManager.getBarIds(log);
 */
 
 /* GET home page. */
