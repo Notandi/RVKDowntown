@@ -3,7 +3,7 @@ var dataManager = function() {
   var self = this;
   var databaseInterfaceModule = require('./pg_dbInterface');
   var databaseInterface = new databaseInterfaceModule();
-  var barGetterModule = require('../models/barGetter');
+  var barGetterModule = require('./barGetter');
   var barGetter = new barGetterModule(databaseInterface);
 
 
@@ -22,7 +22,7 @@ var dataManager = function() {
 
  /**
  * Gets all of the bar ids
- *  
+ * 
  * @param {callback} handleData - delivers the bar_ids
  */
   self.getBarIds = function(handleData){

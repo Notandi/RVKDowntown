@@ -182,9 +182,9 @@ var pg_dbInterface = function() {
             if (err) {
                 return console.error('error fetching client from pool', err);
             }
-            var statement = 'INSERT INTO BARS(name,menu,image,coords,link,description,rating,opens,closes,photo) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+            var statement = 'INSERT INTO BARS(name,menu,image,coords,link,description,rating,opens,closes) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)';
             
-            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, photo: 9};
+            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8};
             var barData = [];
             for (property in bar) {
                 barData[insertOrder[property]] = bar[property];
@@ -207,7 +207,7 @@ var pg_dbInterface = function() {
                 return console.error('error fetching client from pool', err);
             }
 
-            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, photo: 9};
+            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8};
             var barColumns = [];
             var barData = [];
             for (property in bar) {

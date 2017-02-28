@@ -52,7 +52,6 @@ var places = new GooglePlaces(API_KEY);
                         rating : response.result.rating,
                         opens : '',
                         closes : '',
-                        photo : '',
                       }
                       for(property in bar)
                       {
