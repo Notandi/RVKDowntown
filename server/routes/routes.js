@@ -21,6 +21,7 @@ function log(bar_ids)
 dataManager.getBarIds(log);
 */
 
+dataManager.updateBars();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });

@@ -9,7 +9,7 @@ var dataManager = function() {
 
   fbManager();
   
-     /**
+   /**
    * Fills the database with bars if it is empty
    *  
    */ 
@@ -19,8 +19,7 @@ var dataManager = function() {
       if(bar_ids.length === 0) barGetter.loadInitialBarData();
     }
     self.getBarIds(loadData);
-
-    //fbManager.init();
+    
   };
 
 
@@ -82,62 +81,28 @@ var dataManager = function() {
     databaseInterface.updateBar(bar);
   };
 
-
-  self.reformatObject = function(type, obj) {
-    if(type === 'bars')
-    {
-      var bars = [];
-      for(var i = 0; i<obj.length; i++)
-      {
-        var opening_hours = obj[i].opening_hours;
-        var opens = {};
-        var closes = {};
-
-        var k = 2;
-        for(property in opening_hours)
-        {
-          if(k%2 === 0)
-          {
-            opens[property] = opening_hours[property];                        
-          }
-
-          else
-          {
-            closes[property] = opening_hours[property];
-          }
-
-          k++
-        }
-
-        var bar = {
-          name : obj[i].name,
-          opens : JSON.stringify(opens),
-          closes : JSON.stringify(closes),
-          
-        }
-
-      }
-
-    }
-
-
-  };
-  
   /**
   * Updates all of the bars with events
   * 
   */
   self.updateEvents = function() {
     function insertEvents(events){
-      for(property in events){
-        for(var i = 0; i<events[property].length; i++){
-          self.addEvent(events[property][i],property);
+      console.log('CONSOLE LOGGING EVENTS!!');
+      console.log(events);
+
+      for(var i = 0; i<events.length; i++){
+        for(var k = 0; events[i].length; k++)
+        {
+          if(!dateHasPassed(events[k].endTime))
+          {
+            self.addEvent(events[k],events[k].name);
+          }
         }
       }
     }
     fbManager.updateEvents(insertEvents);
+    self.removeExpiredEvents();
   };
-
 
  /**
  * Updates all of the bars
@@ -145,23 +110,129 @@ var dataManager = function() {
  */
   self.updateBars = function() {
     function updateBars(bars){
-      for(var property in bars)
+      function handleBarIds(bar_ids)
       {
-        var bar = {};
-        bar[name] = property;
-        for(var element in bars[property])
+        function handleBars(db_bars)
         {
-          bar[element] = bars[property][element];
+
+          for(var i = 0; i<bars.length; i++)
+          {
+            self.updateBar(parseObject(bars[i]));
+            db_bars.slice(barIndice(db_bars,bars[i].name));
+          }
+
+          for(var k = 0; k<db_bars.length; k++)
+          {
+            databaseInterface.deleteBar(db_bars[k].name);
+          }
+
         }
-        self.updateBar(bar);
+        databaseInterface.getBars(handleBars,bar_ids);
       }
+      databaseInterface.getBarIds(handleBarIds);
+      
     }
 
-    fbManager.updateBars(updateBars);
+    //fbManager.updateBars(updateBars);
     self.updateEvents();
   };
 
+ /**
+ * Removes all expired events
+ * 
+ */
+  self.removeExpiredEvents = function() {
+    function deliverData(events){
+      for(var i = 0; i<events.length; i++)
+      {
+        if(dateHasPassed(events[i].endTime))
+        {
+          databaseInterface.removeEvent(events[i].link);
+        }
+      }
+    }
+    databaseInterface.getEvents(deliverData);
+
+  };
+
+    /* *** PRIVATE FUNCTIONS *** */
+
+  /**
+  * Check if a date has passed
+  * 
+  * @param {string} date - The date you want to check for
+  * @returns {boolean} - Returns whether date has passed or not
+  */
+  function dateHasPassed(date) {
+    var dateTime = Date.parse(date);
+    var currentDate = new Date();
+    var currentTime = currentDate.getTime();
+
+    return dateTime > currentTime;
+  };
+
+  /**
+  * Finds the indice of the bar object 'bar' in db_bars
+  * 
+  * @param {array} db_bars - Array of bars retreived from the databse
+  * @param {string} - The name of the bar to find
+  */
+  function barIndice(db_bars,bar){
+    for(var i = 0; i<db_bars.length; i++)
+    {
+      if(db_bars[i].name === bar)
+      {
+        return i;
+      }
+    }
+
+    return -1;
+  };
+
+    /**
+ * Parses a bar object so that it can be inserted into the database 
+ *  
+ * @param {object} obj - The bar object that is to be parsed
+ */
+   function parseObject(obj) {
+
+    
+    var opening_hours = obj[i].opening_hours;
+    var opens = {};
+    var closes = {};
+
+    var k = 2;
+    for(property in opening_hours)
+    {
+      if(k%2 === 0)
+      {
+        opens[property] = opening_hours[property];                        
+      }
+      else
+      {
+        closes[property] = opening_hours[property];
+      }
+
+      k++;
+    }
+
+    var bar = {
+      name : name,
+      opens : JSON.stringify(opens),
+      closes : JSON.stringify(closes),
+      image: obj.cover.source,
+      description: obj.about,
+      link : obj.link,
+    }
+
+    return bar;
+
+  };
+
 };
+
+
+
 
 
 

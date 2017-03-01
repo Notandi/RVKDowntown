@@ -38,7 +38,7 @@ var barGetter = function(databaseInterface) {
                 for (var i = 0; i < barsFound.length; i++) {
                     //console.log('calling for details');
                     places.details({
-                        reference: barsFound[i].reference
+                        reference: barsFound[i].reference;
                     }, function(err, response) {
                         //console.log('made it to call');
                         var parsedCoords = JSON.stringify(response.result.geometry.location);
@@ -75,59 +75,44 @@ var barGetter = function(databaseInterface) {
 
 
 
-    self.updateBars = function() {
+    self.updateRatings = function() {
 
-
-
-      /*function handleData(bar_ids)
-      {
-        function fetchInfo(bars)
-        {
-          for(var i = 0; i<bars.length; i++)
-          {
-            googleMapsClient.places({
-            language: 'en',
-            location: [bars[i].lat, bars[i].long],
-            radius: 1000,
-            type: 'bar',
-          }, function(err, response) {
-            if (!err) {
-              console.log(response.json.results);
-              for(var k = 0; k<response.json.results; k++)
-              {
-
-              }
-            }
-          });
-
-          }
-
-
-
-        }
-
-        db.getBars(fetchInfo,bar_ids);
-
-      }
-
-      db.getBarIds(handleData);*/
-
-
-       googleMapsClient.places({
+        googleMapsClient.placesRadar({
             language: 'en',
             location: [64.14583609, -21.93030953],
             radius: 10000,
             type: 'bar',
-          }, function(err, response) {
+        }, function(err, response) {
             if (!err) {
-              console.log(response.json.results);
+                //console.log(response.json.results);
+                var barsFound = response.json.results;
+                //console.log(barsFound.length);
+
+                for (var i = 0; i < barsFound.length; i++) {
+                    //console.log('calling for details');
+                    places.details({
+                        reference: barsFound[i].reference;
+                    }, function(err, response) {
+                        //console.log('made it to call');                        
+                        var bar = {
+                            name: response.result.name,
+                            coords: parsedCoords,
+                        }
+                        for (property in bar) {
+                            if (bar[property] === undefined) {
+                                if (property === 'rating') {
+                                    bar[property] = 0.0;
+                                } else {
+                                    bar[property] = '';
+                                }
+                            }
+                        }
+                        db.updateBar(bar);
+                        console.log('inserting the following bar', bar);
+                    });
+                }
             }
-          });
-
-
-
-
-
+        });
 
     };
 

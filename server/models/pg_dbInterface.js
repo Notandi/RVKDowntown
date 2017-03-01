@@ -36,6 +36,7 @@ var pg_dbInterface = function() {
     };
 
     var pool = new pg.Pool(config);
+    const POOL_ERROR = {message: 'error fetching client from pool', code: 500};
 
     /**
    * Gets a number of bars equal to the length of bar_ids with each bar object also containing all of the events for that bar
@@ -46,7 +47,9 @@ var pg_dbInterface = function() {
     self.getBars = function(deliverData, bar_ids) {
         pool.connect(function(err, client, done) {
             if (err) {
-                return console.error('error fetching client from pool', err);
+              //throw POOL_ERROR;
+
+              return console.error('error fetching client from pool', err);
             }
 
             var bars = [];
@@ -70,8 +73,8 @@ var pg_dbInterface = function() {
                     link: row.link,
                     description: row.description,
                     rating: row.rating,
-                    opens: row.opens,
-                    closes: row.closes,
+                    opens: JSON.parse(row.opens),
+                    closes: JSON.parse(row.closes),
                     events : [],
                 }
                 bars.push(bar);
@@ -86,7 +89,7 @@ var pg_dbInterface = function() {
                 for(var i = 0; i<bars.length; i++)
                 {
                   if(row.venue === bars[i].name)
-                  {                    
+                  {                   
                     bars[i].events.push(row);
                     break;
                   }
@@ -102,7 +105,7 @@ var pg_dbInterface = function() {
 
         });
 
-    }
+    };
 
     /**
    * Gets an array containing the ids of all the bars in the database
@@ -111,7 +114,8 @@ var pg_dbInterface = function() {
     self.getBarIds = function(deliverData) {
         pool.connect(function(err, client, done) {
             if (err) {
-                return console.error('error fetching client from pool', err);
+              //throw POOL_ERROR;
+              return console.error('error fetching client from pool', err);
             }
             var query = client.query('SELECT _id FROM BARS');
             var bar_ids = [];
@@ -138,17 +142,18 @@ var pg_dbInterface = function() {
 
         pool.connect(function(err, client, done) {
             if (err) {
-                return console.error('error fetching client from pool', err);
+              //throw POOL_ERROR;
+              return console.error('error fetching client from pool', err);
             }
 
             //Sorting the event data into the correct order before inserting
-            var insertOrder = {name: 0, startTime: 1,endTime: 2,description: 3,venue: 4,link: 5};
+            var insertOrder = {name: 0, startTime: 1,endTime: 2,guests: 3,venue: 4,link: 5};
             var eventData = [];
             for (property in event) {
-                eventData[insertOrder[property]] = event[property];                
+                eventData[insertOrder[property]] = event[property];          
             }
             
-            var statement = 'INSERT INTO EVENTS(name,startTime,endTime,description,venue,link) VALUES($1,$2,$3,$4,$5,$6)';
+            var statement = 'INSERT INTO EVENTS(name,startTime,endTime,guests,venue,link) VALUES($1,$2,$3,$4,$5,$6)';
             
             var query = client.query(statement, eventData);
 
@@ -180,7 +185,8 @@ var pg_dbInterface = function() {
     self.insertBar = function(bar){
       pool.connect(function(err, client, done) {
             if (err) {
-                return console.error('error fetching client from pool', err);
+              //throw POOL_ERROR;
+              return console.error('error fetching client from pool', err);
             }
             var statement = 'INSERT INTO BARS(name,menu,image,coords,link,description,rating,opens,closes) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)';
             
@@ -196,6 +202,85 @@ var pg_dbInterface = function() {
         });
     };
 
+   /**
+   * Deletes a bar from the database
+   *
+   * @param {string} bar  - name of the bar
+   */
+    self.deleteBar = function(bar) {
+        pool.connect(function(err, client, done) {
+            if (err) {
+              //throw POOL_ERROR;
+              return console.error('error fetching client from pool', err);
+            }
+            
+            var findIdQuery = client.query('SELECT _id FROM BARS WHERE name = $1', [bar]);
+
+            findIdQuery.on('end', function(result) {
+                var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _bar_id', [result.rows[0]._id]);
+                deleteRelationQuery.on('end', function(result) {
+                    var deleteBar = 'DELETE FROM BARS WHERE name = $1';
+                    client.query(deleteBar, [bar]);
+                });
+            });
+
+            done();
+        });
+
+    };
+
+
+   /**
+   * Deletes a event from the database
+   *
+   * @param {string} link  - link to the event that is to be deleted, assumes links are unique
+   */
+    self.deleteEvent = function(link){
+      pool.connect(function(err, client, done) {
+            if (err) {
+              //throw POOL_ERROR;
+              return console.error('error fetching client from pool', err);
+            }
+
+            var findIdQuery = client.query('SELECT _id FROM EVENTS WHERE link = $1', [link]);
+
+            findIdQuery.on('end', function(result) {
+                var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _event_id', [result.rows[0]._id]);
+                deleteRelationQuery.on('end', function(result) {
+                    var deleteEvent = 'DELETE FROM EVENTS WHERE link = $1';
+                    client.query(deleteEvent, [link]);
+                });
+            });
+
+            done();
+        });
+    };
+
+   /**
+   * Retrieves all of the events in the database
+   *
+   * @param {function} deliverData  - A callback function that is called when the events have been retrieved
+   */
+    self.getEvents = function(deliverData) {
+      pool.connect(function(err, client, done) {
+            if (err) {
+              //throw POOL_ERROR;
+              return console.error('error fetching client from pool', err);
+            }
+            var query = client.query('SELECT * FROM EVENTS');
+            var events = [];
+
+            query.on('row', function(row, result) {
+              events.push(row);
+            });
+            query.on('end', function(result) {
+                deliverData(events);
+            });
+            done();
+        });
+
+    }
+
      /**
    * Updates a bar in the database
    *
@@ -204,7 +289,8 @@ var pg_dbInterface = function() {
     self.updateBar = function(bar){
       pool.connect(function(err, client, done) {
             if (err) {
-                return console.error('error fetching client from pool', err);
+              //throw POOL_ERROR;
+              return console.error('error fetching client from pool', err);
             }
 
             var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8};
@@ -233,15 +319,25 @@ var pg_dbInterface = function() {
             
             for (var i = 0; i < barColumns.length-1; i++) {
                 console.log('statement so far: ' + statement);
-                statement += barColumns[i] + ' = $'+(i+1)+',';                
+                statement += barColumns[i] + ' = $'+(i+1)+',';              
             }
 
             //Getting rid of the extra comma at the end
             statement = statement.substring(0, statement.length-1);
             statement += ' WHERE name = $'+barColumns.length;
             
-   
-            client.query(statement,barData);
+            var checkIfBarExists = 'SELECT * FROM BARS WHERE name = $1';
+            var checkQuery = client.query(checkIfBarExists,[bar.name]);
+            var bars = [];
+            checkQuery.on('row', function(row, result) {
+              bars.push(row);
+            });
+            query.on('end', function(result) {
+              //Make sure we are updating a bar that exists
+              if(bars.length > 0) client.query(statement,barData);                
+            });
+
+            
 
             done();
         });
