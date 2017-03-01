@@ -23,7 +23,7 @@ var fbManager = function() {
       accessToken = res.access_token;
       FB.setAccessToken(accessToken);
       console.log("accesstoken:");
-      console.log(accessToken);
+      //console.log(accessToken);
       // updateFunction();
       // self.fetchEvents(function(response) {
       // 	console.log(response);
@@ -40,6 +40,7 @@ var fbManager = function() {
 
   //Sækir events
   self.fetchEvents = function(callback) {
+    console.log('MADE IT TO FETCH EVENTS');
   	let barList = fs.readFileSync('./bars3.txt').toString().split('\n');
     let barInfo = [];
     let events = [];
@@ -50,7 +51,7 @@ var fbManager = function() {
     for(var i = 0; i<barList.length; i++){
       barList[i] = barList[i].replace(/\r/, "");
       barInfo[i] = barList[i].split(':');
-      console.log('barInfo i byrjun' + barInfo[i][0])
+      //console.log('barInfo i byrjun' + barInfo[i][0])
       let fbBarName = barInfo[i][0];
       searchQuery = '/' + barInfo[i][1];
 
@@ -58,7 +59,7 @@ var fbManager = function() {
       FB.api(searchQuery, 'GET', fields, function(res) {
   	    countResponse++;
         if(!res || res.error) {
-          console.log(!res ? 'error occurred' : res.error);
+          //console.log(!res ? 'error occurred' : res.error);
             
         }
 
@@ -79,17 +80,18 @@ var fbManager = function() {
           name: fbBarName,
           events: bar
         })
-        console.log('events:');
-        console.log(events)
+        //console.log('events:');
+        //console.log(events)
         if(countResponse >= barList.length) {
-          callback(events)
+          console.log('got responses for all bars');
+          callback(events);
         }
       });
     
     //for lykkja 1 endar
     }
-    console.log('events eftir lykkju 1:');
-    console.log(events)
+    //console.log('events eftir lykkju 1:');
+    //console.log(events)
 
   }
   

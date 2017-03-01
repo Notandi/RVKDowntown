@@ -5,9 +5,10 @@ var dataManager = function() {
   var databaseInterface = new databaseInterfaceModule();
   var barGetterModule = require('./barGetter');
   var barGetter = new barGetterModule(databaseInterface);
-  var fbManager = require('./fbManager');
+  var fbManagerModule = require('./fbManager');
+  var fbManager = new fbManagerModule();
 
-  fbManager();
+  
   
    /**
    * Fills the database with bars if it is empty
@@ -86,9 +87,11 @@ var dataManager = function() {
   * 
   */
   self.updateEvents = function() {
+    console.log('MADE IT TO UPDATE EVENTS');
     function insertEvents(events){
       console.log('CONSOLE LOGGING EVENTS!!');
-      console.log(events);
+      //console.log(events);
+      console.log('events length: ' + events.length);
 
       for(var i = 0; i<events.length; i++){
         for(var k = 0; events[i].length; k++)
@@ -100,7 +103,7 @@ var dataManager = function() {
         }
       }
     }
-    fbManager.updateEvents(insertEvents);
+    fbManager.update('events',insertEvents);
     self.removeExpiredEvents();
   };
 

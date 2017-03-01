@@ -38,7 +38,7 @@ var barGetter = function(databaseInterface) {
                 for (var i = 0; i < barsFound.length; i++) {
                     //console.log('calling for details');
                     places.details({
-                        reference: barsFound[i].reference;
+                        reference: barsFound[i].reference
                     }, function(err, response) {
                         //console.log('made it to call');
                         var parsedCoords = JSON.stringify(response.result.geometry.location);
@@ -91,7 +91,7 @@ var barGetter = function(databaseInterface) {
                 for (var i = 0; i < barsFound.length; i++) {
                     //console.log('calling for details');
                     places.details({
-                        reference: barsFound[i].reference;
+                        reference: barsFound[i].reference
                     }, function(err, response) {
                         //console.log('made it to call');                        
                         var bar = {
