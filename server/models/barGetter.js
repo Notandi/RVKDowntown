@@ -21,6 +21,7 @@ var barGetter = function(databaseInterface) {
 
     self.loadInitialBarData = function() {
         console.log('called load initial bar data');
+        console.log('CALLED loadInitialBarData');
 
         //console.log(googleMapsClient);
         //name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, photo: 9

@@ -51,7 +51,7 @@ var pg_dbInterface = function() {
 
               return console.error('error fetching client from pool', err);
             }
-
+            console.log('called getBars');
             var bars = [];
 
             var params = [];
@@ -64,17 +64,26 @@ var pg_dbInterface = function() {
 
             query.on('row', function(row, result) {
 
+                var parsedCoords = JSON.parse(row.coords);
+                var parsedOpens = '';
+                var parsedCloses = '';
+                if(row.opens !== '')
+                {
+                  parsedOpens = JSON.parse(row.opens);
+                  parsedCloses = JSON.parse(row.closes);
+                }
+
                 var bar = {
                     id: row._id,
                     name: row.name,
                     menu: row.menu,
                     image: row.image,
-                    coords: JSON.parse(row.coords),
+                    coords : parsedCoords,
                     link: row.link,
                     description: row.description,
                     rating: row.rating,
-                    opens: JSON.parse(row.opens),
-                    closes: JSON.parse(row.closes),
+                    opens: parsedOpens,
+                    closes: parsedCloses,
                     events : [],
                 }
                 bars.push(bar);
@@ -149,27 +158,54 @@ var pg_dbInterface = function() {
             //Sorting the event data into the correct order before inserting
             var insertOrder = {name: 0, startTime: 1,endTime: 2,guests: 3,venue: 4,link: 5};
             var eventData = [];
+
+            //Replace all undefined variables with an empty string
             for (property in event) {
-                eventData[insertOrder[property]] = event[property];          
+              if(event[property] === undefined)
+              {
+                eventData[insertOrder[property]] = '';
+              }
+              else
+              {
+                eventData[insertOrder[property]] = event[property];
+              }
+                       
             }
-            
+
             var statement = 'INSERT INTO EVENTS(name,startTime,endTime,guests,venue,link) VALUES($1,$2,$3,$4,$5,$6)';
+
             
             var query = client.query(statement, eventData);
-
-
-            query.on('end', function(result) {
-                var query2 = client.query('SELECT BARS._id AS bar_id, EVENTS._id AS' +
-                    ' event_id FROM EVENTS,BARS where EVENTS.name = $1 AND BARS.name = $2', [event.name, bar]);
-                query2.on('row', function(row, result) {
-                    result.addRow(row);
-                });
-                query2.on('end', function(result) {
-                    var bar_id = result.rows[0].bar_id;
-                    var event_id = result.rows[0].event_id;
-                    var query3 = client.query('INSERT INTO EVENTS_IN_BAR(_bar_id,_event_id) VALUES ($1,$2)', [bar_id, event_id]);
-                });
+            
+            var checkIfEventExists = 'SELECT * FROM EVENTS WHERE name = $1';
+            var checkQuery = client.query(checkIfEventExists,[event.link]);
+            var events = [];
+            checkQuery.on('row', function(row, result) {
+              events.push(row);
             });
+            checkQuery.on('end', function(result) {
+
+              //Make sure we are insert a event that doesn't exist
+              if(events.length <= 0)
+              {
+                  query.on('end', function(result) {                
+                    var query2 = client.query('SELECT BARS._id AS bar_id, EVENTS._id AS' +
+                        ' event_id FROM EVENTS,BARS where EVENTS.link = $1 AND BARS.name = $2', [event.link, bar]);
+                    query2.on('row', function(row, result) {
+                        result.addRow(row);
+                    });
+                    query2.on('end', function(result) {
+
+                        var bar_id = result.rows[0].bar_id;
+                        var event_id = result.rows[0].event_id;
+                        var query3 = client.query('INSERT INTO EVENTS_IN_BAR(_bar_id,_event_id) VALUES ($1,$2)', [bar_id, event_id]);
+                    });
+              });
+
+              }     
+            });
+
+            
 
             done();
 
@@ -192,11 +228,31 @@ var pg_dbInterface = function() {
             
             var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8};
             var barData = [];
+
+            //Replace all undefined variables with an empty string
             for (property in bar) {
+              if(bar[property] === undefined)
+              {
+                barData[insertOrder[property]] = '';
+              }
+              else
+              {
                 barData[insertOrder[property]] = bar[property];
+              }                
             }
 
             client.query(statement,barData);
+
+            var checkIfBarExists = 'SELECT * FROM BARS WHERE name = $1';
+            var checkQuery = client.query(checkIfBarExists,[bar.name]);
+            var bars = [];
+            checkQuery.on('row', function(row, result) {
+              bars.push(row);
+            });
+            checkQuery.on('end', function(result) {
+              //Make sure we are inserting a bar that doesn't exist
+              if(bars.length <= 0) client.query(statement,barData);               
+            });
 
             done();
         });
@@ -213,11 +269,13 @@ var pg_dbInterface = function() {
               //throw POOL_ERROR;
               return console.error('error fetching client from pool', err);
             }
+
+            console.log('called delete bar');
             
             var findIdQuery = client.query('SELECT _id FROM BARS WHERE name = $1', [bar]);
 
             findIdQuery.on('end', function(result) {
-                var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _bar_id', [result.rows[0]._id]);
+                var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _bar_id = $1', [result.rows[0]._id]);
                 deleteRelationQuery.on('end', function(result) {
                     var deleteBar = 'DELETE FROM BARS WHERE name = $1';
                     client.query(deleteBar, [bar]);
@@ -332,7 +390,7 @@ var pg_dbInterface = function() {
             checkQuery.on('row', function(row, result) {
               bars.push(row);
             });
-            query.on('end', function(result) {
+            checkQuery.on('end', function(result) {
               //Make sure we are updating a bar that exists
               if(bars.length > 0) client.query(statement,barData);                
             });

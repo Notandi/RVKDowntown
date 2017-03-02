@@ -61,6 +61,8 @@ var dataManager = function() {
  * @param {string} bar - Bar name
  */
   self.addEvent = function(event, bar) {
+    //console.log('called add event');
+    console.log('called addEvent with bar: ' + bar);
     databaseInterface.insertEvent(event,bar);
   };
 
@@ -88,23 +90,63 @@ var dataManager = function() {
   */
   self.updateEvents = function() {
     console.log('MADE IT TO UPDATE EVENTS');
-    function insertEvents(events){
-      console.log('CONSOLE LOGGING EVENTS!!');
+    function insertEvents(bars){
+      console.log('MADE IT TO INSERT EVENTS!!');
       //console.log(events);
-      console.log('events length: ' + events.length);
-
-      for(var i = 0; i<events.length; i++){
-        for(var k = 0; events[i].length; k++)
+      //console.log('events length: ' + events.length);
+      function handleBarIds(bar_ids)
+      {
+        function removeOldBars(db_bars)
         {
-          if(!dateHasPassed(events[k].endTime))
+          console.log('made it to removeOldBars');
+          var missingBarsInDb = [];
+          for(var i = 0; i<bars.length; i++)
           {
-            self.addEvent(events[k],events[k].name);
+            var indice = barIndice(db_bars,bars[i].name);
+            if(indice < 0) //Found a object that exists in text file but not database
+            {
+              missingBarsInDb.push(bars[i].name);
+              bars.splice(i,1);
+              i--;
+            }
+            else
+            {
+              db_bars.splice(indice,1);
+            }
+            
           }
+
+          console.log('these are the bars that are missing in the database: ', missingBarsInDb);
+
+          
+          //Deleting all bars that were not in the txt file but were in the database
+          for(var k = 0; k<db_bars.length; k++)
+          {
+            databaseInterface.deleteBar(db_bars[k].name);
+          }
+
+          for(var i = 0; i<bars.length; i++)
+          {
+          //console.log('event bla: ');
+          //console.log(events[i]);
+        
+            for(var k = 0; k<bars[i].events.length; k++)
+            {
+              if(!dateHasPassed(bars[i].events[k]))
+              {
+                self.addEvent(bars[i].events[k],events[i].name);
+              }
+            }
+          }
+
         }
+        databaseInterface.getBars(removeOldBars,bar_ids);
       }
+      databaseInterface.getBarIds(handleBarIds);
+
     }
     fbManager.update('events',insertEvents);
-    self.removeExpiredEvents();
+    //self.removeExpiredEvents();
   };
 
  /**
@@ -118,15 +160,33 @@ var dataManager = function() {
         function handleBars(db_bars)
         {
 
+          var missingBarsInDb = [];
           for(var i = 0; i<bars.length; i++)
           {
-            self.updateBar(parseObject(bars[i]));
-            db_bars.slice(barIndice(db_bars,bars[i].name));
+            var indice = barIndice(db_bars,bars[i].name);
+            if(indice < 0) //Found a object that exists in text file but not database
+            {
+              missingBarsInDb.push(bars[i].name);
+              bars.splice(i,1);
+              i--;
+            }
+            else
+            {
+              db_bars.splice(indice,1);
+            }
+            
           }
 
+          //Deleting all bars that were not in the txt file but were in the database
           for(var k = 0; k<db_bars.length; k++)
           {
             databaseInterface.deleteBar(db_bars[k].name);
+          }
+
+
+          for(var i = 0; i<bars.length; i++)
+          {
+            self.updateBar(bar);
           }
 
         }
@@ -138,6 +198,7 @@ var dataManager = function() {
 
     // fbManager.updateBars(updateBars);
     fbManager.update('bars', updateBars);
+    fbManager.update('bars',updateBars);
     self.updateEvents();
   };
 
@@ -162,17 +223,39 @@ var dataManager = function() {
     /* *** PRIVATE FUNCTIONS *** */
 
   /**
-  * Check if a date has passed
+  * Check if a event has passed
   * 
-  * @param {string} date - The date you want to check for
-  * @returns {boolean} - Returns whether date has passed or not
+  * @param {string} event - The event you want to check for
+  * @returns {boolean} - Returns whether event has passed or not
   */
-  function dateHasPassed(date) {
-    var dateTime = Date.parse(date);
+  function dateHasPassed(event) {
+    //console.log('checking the following event:');
+    //console.log(event);
+    var endTime = event.endTime;
+    if(endTime === undefined)
+    {
+      if(event.startTime === undefined)
+      {
+        endTime = 0;
+      }
+      else
+      {
+        endTime = Date.parse(event.startTime);
+      }      
+    }
+
+    else
+    {
+      endTime = Date.parse(endTime);
+    }
+
+
+    //console.log('time recieved from event: ' + endTime);
     var currentDate = new Date();
     var currentTime = currentDate.getTime();
+    
 
-    return dateTime > currentTime;
+    return endTime > currentTime;
   };
 
   /**
@@ -180,6 +263,8 @@ var dataManager = function() {
   * 
   * @param {array} db_bars - Array of bars retreived from the databse
   * @param {string} - The name of the bar to find
+  *
+  * @returns {integer} - Returns the indice of the bar object or -1 if it was not found
   */
   function barIndice(db_bars,bar){
     for(var i = 0; i<db_bars.length; i++)
