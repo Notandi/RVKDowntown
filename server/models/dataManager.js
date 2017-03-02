@@ -8,15 +8,6 @@ var dataManager = function() {
   var fbManagerModule = require('./fbManager');
   var fbManager = new fbManagerModule();
 
-  function log(events)
-  {
-    console.log('these are the events that we got');
-    console.log(events);
-
-
-  }
-  databaseInterface.getEvents(log);
-  
   
    /**
    * Fills the database with bars if it is empty
@@ -105,8 +96,7 @@ var dataManager = function() {
       function handleBarIds(bar_ids)
       {
         function removeOldBars(db_bars)
-        {
-          console.log('made it to removeOldBars with these db_bars',db_bars);
+        {          
           var missingBarsInDb = [];
           var missingBarsInTxt = [];
 
@@ -128,8 +118,8 @@ var dataManager = function() {
             
           }
 
-          console.log('these are the bars that are missing in the database: ', missingBarsInDb);
-          console.log('these are the bars that are about to be removed from the database(That were in text file but not DB)', db_bars);
+          //console.log('these are the bars that are missing in the database: ', missingBarsInDb);
+          //console.log('these are the bars that are about to be removed from the database(That were in DB but not text file)', db_bars);
 
           
           //Deleting all bars that were not in the txt file but were in the database
@@ -159,7 +149,7 @@ var dataManager = function() {
 
     }
     fbManager.update('events',insertEvents);
-    self.removeExpiredEvents();
+    //self.removeExpiredEvents();
   };
 
  /**
@@ -192,8 +182,8 @@ var dataManager = function() {
             
           }
 
-          console.log('these are the bars that are missing in the database: ', missingBarsInDb);
-          console.log('these are the bars that are about to be removed from the database', db_bars);
+          //console.log('these are the bars that are missing in the database: ', missingBarsInDb);
+          //console.log('these are the bars that are about to be removed from the database', db_bars);
 
           //Deleting all bars that were not in the txt file but were in the database
           for(var k = 0; k<db_bars.length; k++)

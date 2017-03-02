@@ -3,6 +3,7 @@ var barGetter = function(databaseInterface) {
     const db = databaseInterface;
     var fs = require('fs');
     const API_KEY = 'AIzaSyCzwZgG3X-ZMs2elJi9Bn_l5YgYtvszJBw';
+    const API_KEY2 = 'AIzaSyBk4gNUr3H9-fI9wrv9GwGv9NKneKH500E';
 
     /*var barList = fs.readFileSync('./bars.txt').toString().split('\n');
     for(var i = 0; i<barList.length; i++)
@@ -13,10 +14,10 @@ var barGetter = function(databaseInterface) {
 
     var GooglePlaces = require('google-places');
 
-    var places = new GooglePlaces(API_KEY);
+    var places = new GooglePlaces(API_KEY2);
 
     var googleMapsClient = require('@google/maps').createClient({
-        key: API_KEY,
+        key: API_KEY2,
     });
 
     self.loadInitialBarData = function() {
@@ -41,6 +42,11 @@ var barGetter = function(databaseInterface) {
                     places.details({
                         reference: barsFound[i].reference
                     }, function(err, response) {
+                        if(err)
+                        {
+                            //console.log('error recieved!!',err);
+                        }
+                        console.log('response: ',response);
                         //console.log('made it to call');
                         var parsedCoords = JSON.stringify(response.result.geometry.location);
                         var bar = {
