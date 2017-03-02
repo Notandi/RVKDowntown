@@ -42,7 +42,7 @@ var fbManager = function() {
   //Sækir events
   self.fetchEvents = function(callback) {
     console.log('MADE IT TO FETCH EVENTS');
-  	let barList = fs.readFileSync('./bars3.txt').toString().split('\n');
+  	let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
     let barInfo = [];
     let events = [];
     // var fbBarName;
@@ -102,7 +102,7 @@ var fbManager = function() {
   self.fetchBars = function(callback) {
   	let fields = {"fields":"about,description,hours,cover"};
     
-    let barList = fs.readFileSync('./barsTEST.txt').toString().split('\n');
+    let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
     let barInfo = [];
     let barDetails = [];
 
