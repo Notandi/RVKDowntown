@@ -136,7 +136,8 @@ var dataManager = function() {
       
     }
 
-    //fbManager.updateBars(updateBars);
+    // fbManager.updateBars(updateBars);
+    fbManager.update('bars', updateBars);
     self.updateEvents();
   };
 

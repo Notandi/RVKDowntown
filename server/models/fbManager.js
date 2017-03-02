@@ -32,7 +32,7 @@ var fbManager = function() {
   	  if(type == 'events') {
   	  	self.fetchEvents(callback)
   	  } else if('bars') {
-        self.fetchBars()
+        self.fetchBars(callback)
   	  }
   	  
     });
@@ -99,7 +99,7 @@ var fbManager = function() {
 
   //sækir opening hours og description og cover photo
   //muna að handle-a undefined
-  self.fetchBars = function() {
+  self.fetchBars = function(callback) {
   	let fields = {"fields":"about,description,hours,cover"};
     
     let barList = fs.readFileSync('./barsTEST.txt').toString().split('\n');
@@ -119,26 +119,21 @@ var fbManager = function() {
           //console.log(!res ? 'error occurred' : res.error);
         // }
 
-        // console.log(response.hours);
-        // console.log(response.hours);
-        // console.log(response.cover.source)
-        var coverPic = ''
+        var coverPic = undefined
         if(response.cover!= undefined) coverPic = response.cover.source;
-        var bar = {
-        	about: response.about,
-        	description: response.description,
-        	hours: response.hours,
-        	cover: coverPic
-        }
+
         barDetails.push({
         	name: fbBarName,
-            info: bar
-        	});
-        
+            about: response.about,
+        	description: response.description,
+        	opening_hours: response.hours,
+        	cover: coverPic
+        });
+
         countResponseBars++
         if(countResponseBars >= barList.length) {
           console.log('got responses for all bars');
-          // callback(events);
+          callback(barDetails);
           console.log(barDetails);
         }
 
