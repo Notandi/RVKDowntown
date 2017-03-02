@@ -1,7 +1,6 @@
 var fbManager = function() {
   var FB = require('fb');
   var fs = require('fs');
-  // var fb = new FB.Facebook(options);
   var self = this;
   var accessToken;
 
@@ -85,16 +84,12 @@ var fbManager = function() {
         //console.log('events:');
         //console.log(events)
         if(countResponseEvents >= barList.length) {
-          console.log('got responses for all bars');
+          console.log('got responses for all bars(events)');
           callback(events);
         }
       });
-    
     //for lykkja 1 endar
     }
-    //console.log('events eftir lykkju 1:');
-    //console.log(events)
-
   }
   
 
@@ -122,7 +117,6 @@ var fbManager = function() {
 
         var coverPic = undefined
         if(response.cover!= undefined) coverPic = response.cover.source;
-
         barDetails.push({
         	name: fbBarName,
           about: response.about,
@@ -130,20 +124,14 @@ var fbManager = function() {
         	opening_hours: response.hours,
         	cover: coverPic
         });
-
         countResponseBars++
         if(countResponseBars >= barList.length) {
-          //console.log('got responses for all bars');
+          console.log('got responses for all bars(barinfo)');
           callback(barDetails);
-          //console.log(barDetails);
         }
-
       });
-
     }
-      
   }
-
 }
 
 
