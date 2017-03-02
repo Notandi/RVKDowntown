@@ -181,10 +181,8 @@ var pg_dbInterface = function() {
             }
 
             var statement = 'INSERT INTO EVENTS(name,startTime,endTime,guests,venue,link) VALUES($1,$2,$3,$4,$5,$6)';
-
-            
-            
-            
+         
+           
             var checkIfEventExists = 'SELECT * FROM EVENTS WHERE name = $1';
             var checkQuery = client.query(checkIfEventExists,[event.link]);
             let events = [];
@@ -192,29 +190,24 @@ var pg_dbInterface = function() {
               events.push(row);
             });
             checkQuery.on('end', function(result) {
-              //console.log('events length: ' + events.length);
+              
               //Make sure we are insert a event that doesn't exist
               if(events.length <= 0)
               {
-                  let query = client.query(statement, eventData);
-                  //console.log('no identical event exists');
-                  query.on('end', function(result) {
-                  console.log('made insertion');
+                  let query = client.query(statement, eventData);                  
+                  query.on('end', function(result) {                  
                     let query2 = client.query('SELECT BARS._id AS bar_id, EVENTS._id AS' +
                         ' event_id FROM EVENTS,BARS where EVENTS.link = $1 AND BARS.name = $2', [event.link, bar]);
                         console.log('searching for event: ' + event.link + ' and bar: ' + bar);
-                    query2.on('row', function(row, result) {
-                        console.log('found match!');
+                    query2.on('row', function(row, result) {                        
                         result.addRow(row);
                     });
-                    query2.on('end', function(result) {
-                        console.log('finished query2!!');
+                    query2.on('end', function(result) {                        
                         var bar_id = result.rows[0].bar_id;
                         var event_id = result.rows[0].event_id;
                         var query3 = client.query('INSERT INTO EVENTS_IN_BAR(_bar_id,_event_id) VALUES ($1,$2)', [bar_id, event_id]);
                         query3.on('end', function(result) {
-                          console.log('inserted into connecting table!!');
-
+                          
                         });
                     });
               });
@@ -327,7 +320,7 @@ var pg_dbInterface = function() {
             findIdQuery.on('end', function(result) {
                 if(result.rowCount > 0)
                 {
-                  var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _event_id', [result.rows[0]._id]);
+                  var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _event_id = $1', [result.rows[0]._id]);
                 deleteRelationQuery.on('end', function(result) {
                     var deleteEvent = 'DELETE FROM EVENTS WHERE link = $1';
                     client.query(deleteEvent, [link]);

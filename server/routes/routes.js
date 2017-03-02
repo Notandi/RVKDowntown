@@ -4,7 +4,7 @@ var datamanagerModule = require('../models/dataManager');
 var dataManager = new datamanagerModule();
 dataManager.init();
 
-
+//dataManager.removeExpiredEvents();
 //dataManager.updateBars();
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -18,6 +18,11 @@ router.get('/api/ids', function(req, res, next){
     res.send(barids);
   });
 });
+
+router.get('/update', function(req, res, next) {
+  dataManager.updateBars();
+});
+
 
 /**
 * Returns the bars related to the barids

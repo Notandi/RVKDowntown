@@ -18,8 +18,7 @@ var dataManager = function() {
     {
       if(bar_ids.length === 0) barGetter.loadInitialBarData();
     }
-    self.getBarIds(loadData);
-    
+    self.getBarIds(loadData);    
   };
 
 
@@ -214,12 +213,13 @@ var dataManager = function() {
  * 
  */
   self.removeExpiredEvents = function() {
+    console.log('called removeExpiredEvents');
     function deliverData(events){
       for(var i = 0; i<events.length; i++)
       {
-        if(dateHasPassed(events[i].endTime))
+        if(dateHasPassed(events[i]))
         {
-          databaseInterface.removeEvent(events[i].link);
+          databaseInterface.deleteEvent(events[i].link);
         }
       }
     }
@@ -238,6 +238,7 @@ var dataManager = function() {
   function dateHasPassed(event) {
     //console.log('checking the following event:');
     //console.log(event);
+    //console.log('checking for date!');
     var endTime = event.endTime;
     if(endTime === undefined || event.endTime === '')
     {
@@ -256,13 +257,12 @@ var dataManager = function() {
       endTime = Date.parse(endTime);
     }
 
-
+    //console.log()
     //console.log('time recieved from event: ' + endTime);
     var currentDate = new Date();
-    var currentTime = currentDate.getTime();
-    
+    var currentTime = currentDate.getTime();    
 
-    return endTime > currentTime;
+    return endTime < currentTime;
   };
 
   /**

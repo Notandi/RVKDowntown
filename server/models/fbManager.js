@@ -35,6 +35,8 @@ var fbManager = function() {
   self.fetchEvents = function(callback) {
     console.log('MADE IT TO FETCH EVENTS');
   	let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
+    //https://notendur.hi.is/~dap8/rvk/bars4.txt
+    //let barList = fs.readFileSync('https://notendur.hi.is/~dap8/rvk/bars4.txt').toString().split('\n');
     let barInfo = [];
     let events = [];
     var searchQuery;
