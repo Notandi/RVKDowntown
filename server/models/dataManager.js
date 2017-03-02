@@ -8,6 +8,14 @@ var dataManager = function() {
   var fbManagerModule = require('./fbManager');
   var fbManager = new fbManagerModule();
 
+  function log(events)
+  {
+    console.log('these are the events that we got');
+    console.log(events);
+
+
+  }
+  databaseInterface.getEvents(log);
   
   
    /**
@@ -98,9 +106,10 @@ var dataManager = function() {
       {
         function removeOldBars(db_bars)
         {
-          console.log('made it to removeOldBars');
+          console.log('made it to removeOldBars with these db_bars',db_bars);
           var missingBarsInDb = [];
           var missingBarsInTxt = [];
+
           for(var i = 0; i<bars.length; i++)
           {
             var indice = barIndice(db_bars,bars[i].name);
@@ -120,7 +129,7 @@ var dataManager = function() {
           }
 
           console.log('these are the bars that are missing in the database: ', missingBarsInDb);
-          console.log('these are the bars that are about to be removed from the database', db_bars);
+          console.log('these are the bars that are about to be removed from the database(That were in text file but not DB)', db_bars);
 
           
           //Deleting all bars that were not in the txt file but were in the database
@@ -150,7 +159,7 @@ var dataManager = function() {
 
     }
     fbManager.update('events',insertEvents);
-    //self.removeExpiredEvents();
+    self.removeExpiredEvents();
   };
 
  /**
@@ -240,7 +249,7 @@ var dataManager = function() {
     //console.log('checking the following event:');
     //console.log(event);
     var endTime = event.endTime;
-    if(endTime === undefined)
+    if(endTime === undefined || event.endTime === '')
     {
       if(event.startTime === undefined)
       {

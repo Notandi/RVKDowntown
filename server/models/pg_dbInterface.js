@@ -98,8 +98,16 @@ var pg_dbInterface = function() {
                 for(var i = 0; i<bars.length; i++)
                 {
                   if(row.venue === bars[i].name)
-                  {                   
-                    bars[i].events.push(row);
+                  {
+                    var event = {
+                      name: row.name,
+                      startTime: row.starttime,
+                      endTime: row.starttime,
+                      guests: row.guests,
+                      venue: row.venue,
+                      link: row.link,
+                    }     
+                    bars[i].events.push(event);
                     break;
                   }
                 }
@@ -275,11 +283,16 @@ var pg_dbInterface = function() {
             var findIdQuery = client.query('SELECT _id FROM BARS WHERE name = $1', [bar]);
 
             findIdQuery.on('end', function(result) {
-                var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _bar_id = $1', [result.rows[0]._id]);
+                if(result.rowCount > 0)
+                {
+                  var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _bar_id = $1', [result.rows[0]._id]);
                 deleteRelationQuery.on('end', function(result) {
                     var deleteBar = 'DELETE FROM BARS WHERE name = $1';
                     client.query(deleteBar, [bar]);
                 });
+
+                }
+                
             });
 
             done();
@@ -303,11 +316,16 @@ var pg_dbInterface = function() {
             var findIdQuery = client.query('SELECT _id FROM EVENTS WHERE link = $1', [link]);
 
             findIdQuery.on('end', function(result) {
-                var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _event_id', [result.rows[0]._id]);
+                if(result.rowCount > 0)
+                {
+                  var deleteRelationQuery = client.query('DELETE FROM EVENTS_IN_BAR WHERE _event_id', [result.rows[0]._id]);
                 deleteRelationQuery.on('end', function(result) {
                     var deleteEvent = 'DELETE FROM EVENTS WHERE link = $1';
                     client.query(deleteEvent, [link]);
                 });
+
+                }
+                
             });
 
             done();
@@ -327,9 +345,18 @@ var pg_dbInterface = function() {
             }
             var query = client.query('SELECT * FROM EVENTS');
             var events = [];
-
+            //var insertOrder = {name: 0, startTime: 1,endTime: 2,guests: 3,venue: 4,link: 5};
             query.on('row', function(row, result) {
-              events.push(row);
+              var event = {
+                name: row.name,
+                startTime: row.starttime,
+                endTime: row.starttime,
+                guests: row.guests,
+                venue: row.venue,
+                link: row.link,
+              }
+
+              events.push(event);
             });
             query.on('end', function(result) {
                 deliverData(events);

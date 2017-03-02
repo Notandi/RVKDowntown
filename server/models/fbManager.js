@@ -70,7 +70,7 @@ var fbManager = function() {
             bar.push({
               name : res.events.data[i].name,
               link : 'https://www.facebook.com/events/' + res.events.data[i].id,
-              attending : res.events.data[i].attending_count,
+              guests : res.events.data[i].attending_count,
               startTime : res.events.data[i].start_time,
               endTime : res.events.data[i].end_time,
               venue : fbBarName,

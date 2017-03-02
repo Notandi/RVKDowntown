@@ -4,24 +4,8 @@ var datamanagerModule = require('../models/dataManager');
 var dataManager = new datamanagerModule();
 dataManager.init();
 
-/*
-function log(bar_ids)
-{
-	function log2(bars)
-	{
-		for(var i = 0; i<bars.length; i++)
-		{
-			console.log(bars[i].name);
-		}
-	}
 
-	dataManager.getBars(bar_ids,log2);
-}
-
-dataManager.getBarIds(log);
-*/
-
-//dataManager.updateBars();
+dataManager.updateBars();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
