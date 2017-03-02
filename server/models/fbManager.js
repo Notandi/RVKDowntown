@@ -5,8 +5,9 @@ var fbManager = function() {
   var self = this;
   var accessToken;
 
-  let countCalls;
-  let countResponse;
+  let countCallsEvents = 0;
+  let countResponseEvents = 0;
+  let countResponseBars = 0;
 
   
   self.update = function(type, callback) {
@@ -31,7 +32,7 @@ var fbManager = function() {
   	  if(type == 'events') {
   	  	self.fetchEvents(callback)
   	  } else if('bars') {
-        
+        self.fetchBars()
   	  }
   	  
     });
@@ -55,9 +56,9 @@ var fbManager = function() {
       let fbBarName = barInfo[i][0];
       searchQuery = '/' + barInfo[i][1];
 
-      countCalls++;
+      countCallsEvents++;
       FB.api(searchQuery, 'GET', fields, function(res) {
-  	    countResponse++;
+  	    countResponseEvents++;
         if(!res || res.error) {
           //console.log(!res ? 'error occurred' : res.error);
             
@@ -82,7 +83,7 @@ var fbManager = function() {
         })
         //console.log('events:');
         //console.log(events)
-        if(countResponse >= barList.length) {
+        if(countResponseEvents >= barList.length) {
           console.log('got responses for all bars');
           callback(events);
         }
@@ -95,10 +96,56 @@ var fbManager = function() {
 
   }
   
+
   //sækir opening hours og description og cover photo
   //muna að handle-a undefined
   self.fetchBars = function() {
+  	let fields = {"fields":"about,description,hours,cover"};
     
+    let barList = fs.readFileSync('./barsTEST.txt').toString().split('\n');
+    let barInfo = [];
+    let barDetails = [];
+
+    let searchQuery;
+
+    for(var i = 0; i < barList.length; i++) {
+      barList[i] = barList[i].replace(/\r/, "");
+      barInfo[i] = barList[i].split(':');
+      let fbBarName = barInfo[i][0];
+      searchQuery = '/' + barInfo[i][1];
+      
+      FB.api(searchQuery, 'GET', fields, function(response) {
+      	// if(!res || res.error) {
+          //console.log(!res ? 'error occurred' : res.error);
+        // }
+
+        // console.log(response.hours);
+        // console.log(response.hours);
+        // console.log(response.cover.source)
+        var coverPic = ''
+        if(response.cover!= undefined) coverPic = response.cover.source;
+        var bar = {
+        	about: response.about,
+        	description: response.description,
+        	hours: response.hours,
+        	cover: coverPic
+        }
+        barDetails.push({
+        	name: fbBarName,
+            info: bar
+        	});
+        
+        countResponseBars++
+        if(countResponseBars >= barList.length) {
+          console.log('got responses for all bars');
+          // callback(events);
+          console.log(barDetails);
+        }
+
+      });
+
+    }
+      
   }
 
 }
