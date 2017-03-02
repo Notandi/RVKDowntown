@@ -7,7 +7,7 @@ var fbManager = function() {
   let countResponseEvents = 0;
   let countResponseBars = 0;
 
-  
+  // Authorization fyrir Graph API
   self.update = function(type, callback) {
   	FB.api('oauth/access_token', {
       client_id: '1420581601306358',
@@ -19,18 +19,19 @@ var fbManager = function() {
         return;
       }
       accessToken = res.access_token;
+      // Sets the new accesstoken.
       FB.setAccessToken(accessToken);
+      
   	  if(type == 'events') {
   	  	self.fetchEvents(callback)
   	  } else if('bars') {
         self.fetchBars(callback)
   	  }
-  	  
     });
   }
   
 
-  //Sækir events
+  //Calls Facebook Graph Api and gathers information into an array
   self.fetchEvents = function(callback) {
     console.log('MADE IT TO FETCH EVENTS');
   	let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
@@ -44,7 +45,8 @@ var fbManager = function() {
       barInfo[i] = barList[i].split(':');
       let fbBarName = barInfo[i][0];
       searchQuery = '/' + barInfo[i][1];
-
+      
+      //Graph API request
       FB.api(searchQuery, 'GET', fields, function(res) {
   	    countResponseEvents++;
         // if(!res || res.error) {
@@ -68,6 +70,7 @@ var fbManager = function() {
           name: fbBarName,
           events: bar
         })
+        //When all responses have been recieved we make the callback.
         if(countResponseEvents >= barList.length) {
           console.log('got responses for all bars(events)');
           callback(events);
@@ -77,15 +80,14 @@ var fbManager = function() {
   }
   
 
-  //sækir opening hours og description og cover photo
-  //muna að handle-a undefined
+  //Calls Facebook Graph Api and gathers information into an array
   self.fetchBars = function(callback) {
   	let fields = {"fields":"about,description,hours,cover"};
-    
+
+    //Read text file which contains bar names
     let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
     let barInfo = [];
     let barDetails = [];
-
     let searchQuery;
 
     for(var i = 0; i < barList.length; i++) {
@@ -94,6 +96,7 @@ var fbManager = function() {
       let fbBarName = barInfo[i][0];
       searchQuery = '/' + barInfo[i][1];
       
+      //Graph API request
       FB.api(searchQuery, 'GET', fields, function(response) {
       	// if(!res || res.error) {
           //console.log(!res ? 'error occurred' : res.error);
@@ -103,12 +106,13 @@ var fbManager = function() {
         if(response.cover!= undefined) coverPic = response.cover.source;
         barDetails.push({
         	name: fbBarName,
-          about: response.about,
+            about: response.about,
         	description: response.description,
         	opening_hours: response.hours,
         	cover: coverPic
         });
         countResponseBars++
+        //When all responses have been recieved we make the callback.
         if(countResponseBars >= barList.length) {
           console.log('got responses for all bars(barinfo)');
           callback(barDetails);
