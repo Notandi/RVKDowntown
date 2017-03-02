@@ -53,6 +53,7 @@ var barGetter = function(databaseInterface) {
                             rating: response.result.rating,
                             opens: '',
                             closes: '',
+                            about: '',
                         }
                         for (property in bar) {
                             if (bar[property] === undefined) {
@@ -98,6 +99,7 @@ var barGetter = function(databaseInterface) {
                         var bar = {
                             name: response.result.name,
                             coords: parsedCoords,
+                            rating: response.result.rating,
                         }
                         for (property in bar) {
                             if (bar[property] === undefined) {

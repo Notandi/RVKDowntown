@@ -224,9 +224,9 @@ var pg_dbInterface = function() {
               //throw POOL_ERROR;
               return console.error('error fetching client from pool', err);
             }
-            var statement = 'INSERT INTO BARS(name,menu,image,coords,link,description,rating,opens,closes) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)';
+            var statement = 'INSERT INTO BARS(name,menu,image,coords,link,description,rating,opens,closes,about) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
             
-            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8};
+            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, about: 9};
             var barData = [];
 
             //Replace all undefined variables with an empty string
@@ -270,7 +270,7 @@ var pg_dbInterface = function() {
               return console.error('error fetching client from pool', err);
             }
 
-            console.log('called delete bar');
+            //console.log('called delete bar');
             
             var findIdQuery = client.query('SELECT _id FROM BARS WHERE name = $1', [bar]);
 
@@ -351,7 +351,7 @@ var pg_dbInterface = function() {
               return console.error('error fetching client from pool', err);
             }
 
-            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8};
+            var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, about: 9};
             var barColumns = [];
             var barData = [];
             for (property in bar) {
@@ -375,8 +375,7 @@ var pg_dbInterface = function() {
             barData.reverse();
             barColumns.reverse();  
             
-            for (var i = 0; i < barColumns.length-1; i++) {
-                console.log('statement so far: ' + statement);
+            for (var i = 0; i < barColumns.length-1; i++) {                
                 statement += barColumns[i] + ' = $'+(i+1)+',';              
             }
 

@@ -72,7 +72,8 @@ var fbManager = function() {
               link : 'https://www.facebook.com/events/' + res.events.data[i].id,
               attending : res.events.data[i].attending_count,
               startTime : res.events.data[i].start_time,
-              endTime : res.events.data[i].end_time
+              endTime : res.events.data[i].end_time,
+              venue : fbBarName,
             });
           //for lykkja 2 endar
           }
@@ -124,7 +125,7 @@ var fbManager = function() {
 
         barDetails.push({
         	name: fbBarName,
-            about: response.about,
+          about: response.about,
         	description: response.description,
         	opening_hours: response.hours,
         	cover: coverPic
@@ -132,9 +133,9 @@ var fbManager = function() {
 
         countResponseBars++
         if(countResponseBars >= barList.length) {
-          console.log('got responses for all bars');
+          //console.log('got responses for all bars');
           callback(barDetails);
-          console.log(barDetails);
+          //console.log(barDetails);
         }
 
       });

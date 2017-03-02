@@ -62,7 +62,7 @@ var dataManager = function() {
  */
   self.addEvent = function(event, bar) {
     //console.log('called add event');
-    console.log('called addEvent with bar: ' + bar);
+    //console.log('called addEvent with bar: ' + bar);
     databaseInterface.insertEvent(event,bar);
   };
 
@@ -100,6 +100,7 @@ var dataManager = function() {
         {
           console.log('made it to removeOldBars');
           var missingBarsInDb = [];
+          var missingBarsInTxt = [];
           for(var i = 0; i<bars.length; i++)
           {
             var indice = barIndice(db_bars,bars[i].name);
@@ -112,11 +113,14 @@ var dataManager = function() {
             else
             {
               db_bars.splice(indice,1);
+              //missingBarsInTxt.push(bars[i]);
+
             }
             
           }
 
           console.log('these are the bars that are missing in the database: ', missingBarsInDb);
+          console.log('these are the bars that are about to be removed from the database', db_bars);
 
           
           //Deleting all bars that were not in the txt file but were in the database
@@ -134,7 +138,7 @@ var dataManager = function() {
             {
               if(!dateHasPassed(bars[i].events[k]))
               {
-                self.addEvent(bars[i].events[k],events[i].name);
+                self.addEvent(bars[i].events[k],bars[i].name);
               }
             }
           }
@@ -161,6 +165,7 @@ var dataManager = function() {
         {
 
           var missingBarsInDb = [];
+          //var missingBarsInTxt = [];
           for(var i = 0; i<bars.length; i++)
           {
             var indice = barIndice(db_bars,bars[i].name);
@@ -173,9 +178,13 @@ var dataManager = function() {
             else
             {
               db_bars.splice(indice,1);
+              //missingBarsInTxt.push(bars[i]);
             }
             
           }
+
+          console.log('these are the bars that are missing in the database: ', missingBarsInDb);
+          console.log('these are the bars that are about to be removed from the database', db_bars);
 
           //Deleting all bars that were not in the txt file but were in the database
           for(var k = 0; k<db_bars.length; k++)
@@ -186,7 +195,7 @@ var dataManager = function() {
 
           for(var i = 0; i<bars.length; i++)
           {
-            self.updateBar(bar);
+            self.updateBar(parseObject(bars[i]));
           }
 
         }
@@ -196,8 +205,7 @@ var dataManager = function() {
       
     }
 
-    // fbManager.updateBars(updateBars);
-    fbManager.update('bars', updateBars);
+    
     fbManager.update('bars',updateBars);
     self.updateEvents();
   };
@@ -286,7 +294,7 @@ var dataManager = function() {
    function parseObject(obj) {
 
     
-    var opening_hours = obj[i].opening_hours;
+    var opening_hours = obj.opening_hours;
     var opens = {};
     var closes = {};
 
@@ -306,12 +314,12 @@ var dataManager = function() {
     }
 
     var bar = {
-      name : name,
+      name : obj.name,
       opens : JSON.stringify(opens),
       closes : JSON.stringify(closes),
-      image: obj.cover.source,
-      description: obj.about,
-      link : obj.link,
+      image: obj.cover,
+      description: obj.about,      
+      about: obj.about,
     }
 
     return bar;

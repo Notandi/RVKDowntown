@@ -2,6 +2,6 @@ DROP TABLE EVENTS_IN_BAR;
 DROP TABLE BARS;
 DROP TABLE EVENTS;
 
-CREATE TABLE BARS(_id SERIAL PRIMARY KEY, name TEXT NOT NULL, menu TEXT, image TEXT, coords TEXT, link TEXT, description TEXT, rating real, opens TEXT, closes TEXT, CHECK (rating >= 0.0 AND rating <= 5.0));
+CREATE TABLE BARS(_id SERIAL PRIMARY KEY, name TEXT NOT NULL, menu TEXT, image TEXT, coords TEXT, link TEXT, description TEXT, rating real, opens TEXT, closes TEXT, about TEXT, CHECK (rating >= 0.0 AND rating <= 5.0));
 CREATE TABLE EVENTS(_id SERIAL PRIMARY KEY, name TEXT, startTime TEXT, endTime TEXT, guests INTEGER, venue TEXT NOT NULL, link TEXT);
 CREATE TABLE EVENTS_IN_BAR(_id SERIAL PRIMARY KEY, _bar_id INTEGER, _event_id INTEGER, FOREIGN KEY(_bar_id) REFERENCES BARS(_id), FOREIGN KEY(_event_id) REFERENCES EVENTS(_id));
