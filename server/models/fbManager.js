@@ -4,7 +4,6 @@ var fbManager = function() {
   var self = this;
   var accessToken;
 
-  let countCallsEvents = 0;
   let countResponseEvents = 0;
   let countResponseBars = 0;
 
@@ -19,15 +18,8 @@ var fbManager = function() {
         console.log(!res ? 'error occurred' : res.error);
         return;
       }
- 
       accessToken = res.access_token;
       FB.setAccessToken(accessToken);
-      console.log("accesstoken:");
-      //console.log(accessToken);
-      // updateFunction();
-      // self.fetchEvents(function(response) {
-      // 	console.log(response);
-      // });
   	  if(type == 'events') {
   	  	self.fetchEvents(callback)
   	  } else if('bars') {
@@ -44,24 +36,20 @@ var fbManager = function() {
   	let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
     let barInfo = [];
     let events = [];
-    // var fbBarName;
     var searchQuery;
     var fields = {"fields":"events{start_time,end_time,id,name,attending_count}"}
 
     for(var i = 0; i<barList.length; i++){
       barList[i] = barList[i].replace(/\r/, "");
       barInfo[i] = barList[i].split(':');
-      //console.log('barInfo i byrjun' + barInfo[i][0])
       let fbBarName = barInfo[i][0];
       searchQuery = '/' + barInfo[i][1];
 
-      countCallsEvents++;
       FB.api(searchQuery, 'GET', fields, function(res) {
   	    countResponseEvents++;
-        if(!res || res.error) {
+        // if(!res || res.error) {
           //console.log(!res ? 'error occurred' : res.error);
-            
-        }
+        // }
 
         var bar = []
         if(res.events !== undefined) {
@@ -74,21 +62,17 @@ var fbManager = function() {
               endTime : res.events.data[i].end_time,
               venue : fbBarName,
             });
-          //for lykkja 2 endar
           }
         }
         events.push({
           name: fbBarName,
           events: bar
         })
-        //console.log('events:');
-        //console.log(events)
         if(countResponseEvents >= barList.length) {
           console.log('got responses for all bars(events)');
           callback(events);
         }
       });
-    //for lykkja 1 endar
     }
   }
   
