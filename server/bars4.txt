@@ -28,7 +28,7 @@ Hotel Borg by Keahotels:hotelborg
 Kaldi Bar:KaldiBarCafe
 B5:B5
 Lavabarinn:lavabarinn
-Pablo discobar:pablodiscobarr
+Pablo discobar:discobarrvk
 Kaffi Klassik Kringlunni:kaffiklassik.kringlunni
 The Icelandic Rockbar:isrokkbar
 Húrra:hurra.is

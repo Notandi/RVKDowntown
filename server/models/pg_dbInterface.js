@@ -228,7 +228,7 @@ var pg_dbInterface = function() {
    *
    * @param {object} bar  - information about the bar
    */
-    self.insertBar = function(bar){
+    self.insertBar = function(bar, insertedBar){
       pool.connect(function(err, client, done) {
             if (err) {
               //throw POOL_ERROR;
@@ -251,17 +251,20 @@ var pg_dbInterface = function() {
               }                
             }
 
-            client.query(statement,barData);
+            //client.query(statement,barData);
 
             var checkIfBarExists = 'SELECT * FROM BARS WHERE name = $1';
             var checkQuery = client.query(checkIfBarExists,[bar.name]);
-            var bars = [];
-            checkQuery.on('row', function(row, result) {
-              bars.push(row);
-            });
             checkQuery.on('end', function(result) {
               //Make sure we are inserting a bar that doesn't exist
-              if(bars.length <= 0) client.query(statement,barData);               
+              if(result.rowCount <= 0)
+              {
+                var insertionQuery = client.query(statement,barData);
+                insertionQuery.on('end', function(result) {
+                  insertedBar();               
+                });
+
+              }                
             });
 
             done();
@@ -304,7 +307,7 @@ var pg_dbInterface = function() {
 
 
    /**
-   * Deletes a event from the database
+   * Deletes an event from the database
    *
    * @param {string} link  - link to the event that is to be deleted, assumes links are unique
    */
@@ -411,6 +414,8 @@ var pg_dbInterface = function() {
             //Getting rid of the extra comma at the end
             statement = statement.substring(0, statement.length-1);
             statement += ' WHERE name = $'+barColumns.length;
+
+            console.log('statement about to be executed: ' + statement);
             
             var checkIfBarExists = 'SELECT * FROM BARS WHERE name = $1';
             var checkQuery = client.query(checkIfBarExists,[bar.name]);

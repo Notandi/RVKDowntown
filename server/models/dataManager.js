@@ -3,8 +3,8 @@ var dataManager = function() {
   var self = this;
   var databaseInterfaceModule = require('./pg_dbInterface');
   var databaseInterface = new databaseInterfaceModule();
-  var barGetterModule = require('./barGetter');
-  var barGetter = new barGetterModule(databaseInterface);
+  var googleManagerModule = require('./googleManager');
+  var googleManager = new googleManagerModule(databaseInterface);
   var fbManagerModule = require('./fbManager');
   var fbManager = new fbManagerModule();
 
@@ -16,9 +16,9 @@ var dataManager = function() {
   self.init = function(){
     function loadData(bar_ids)
     {
-      if(bar_ids.length === 0) barGetter.loadInitialBarData();
+      if(bar_ids.length === 0) googleManager.loadInitialBarData(self.updateBars);
     }
-    self.getBarIds(loadData);    
+    self.getBarIds(loadData);
   };
 
 
@@ -59,8 +59,6 @@ var dataManager = function() {
  * @param {string} bar - Bar name
  */
   self.addEvent = function(event, bar) {
-    //console.log('called add event');
-    //console.log('called addEvent with bar: ' + bar);
     databaseInterface.insertEvent(event,bar);
   };
 
@@ -94,44 +92,10 @@ var dataManager = function() {
       //console.log('events length: ' + events.length);
       function handleBarIds(bar_ids)
       {
-        function removeOldBars(db_bars)
+        function addEvents(db_bars)
         {          
-          var missingBarsInDb = [];
-          var missingBarsInTxt = [];
-
           for(var i = 0; i<bars.length; i++)
           {
-            var indice = barIndice(db_bars,bars[i].name);
-            if(indice < 0) //Found a object that exists in text file but not database
-            {
-              missingBarsInDb.push(bars[i].name);
-              bars.splice(i,1);
-              i--;
-            }
-            else
-            {
-              db_bars.splice(indice,1);
-              //missingBarsInTxt.push(bars[i]);
-
-            }
-            
-          }
-
-          //console.log('these are the bars that are missing in the database: ', missingBarsInDb);
-          //console.log('these are the bars that are about to be removed from the database(That were in DB but not text file)', db_bars);
-
-          
-          //Deleting all bars that were not in the txt file but were in the database
-          for(var k = 0; k<db_bars.length; k++)
-          {
-            databaseInterface.deleteBar(db_bars[k].name);
-          }
-
-          for(var i = 0; i<bars.length; i++)
-          {
-          //console.log('event bla: ');
-          //console.log(events[i]);
-        
             for(var k = 0; k<bars[i].events.length; k++)
             {
               if(!dateHasPassed(bars[i].events[k]))
@@ -140,19 +104,56 @@ var dataManager = function() {
               }
             }
           }
-
         }
-        databaseInterface.getBars(removeOldBars,bar_ids);
+        databaseInterface.getBars(addEvents,bar_ids);
       }
       databaseInterface.getBarIds(handleBarIds);
 
     }
-    fbManager.update('events',insertEvents);
-    //self.removeExpiredEvents();
+    self.removeExpiredEvents();
+    fbManager.update('events',insertEvents);    
   };
 
+  /**
+  * Removes bars from the database that are not listed in the text file, these are places that were originally received from google
+  * and are either not bars or were just removed from the text file for other reasons
+  *
+  * @param {array} bars - contains the bars that are listed in the text file
+  * @param {array} db_bars - contains the bars that are in the database
+  */
+  /*function removeOldBars(bars,db_bars){
+
+    var missingBarsInDb = [];          
+    for(var i = 0; i<bars.length; i++)
+    {
+      var indice = barIndice(db_bars,bars[i].name);
+      if(indice < 0) //Found a object that exists in text file but not database
+      {
+        missingBarsInDb.push(bars[i].name);
+        bars.splice(i,1);
+        i--;
+      }
+
+      else
+      {
+        db_bars.splice(indice,1);              
+      }
+      
+    }
+
+    //console.log('these are the bars that are missing in the database: ', missingBarsInDb);
+    //console.log('these are the bars that are about to be removed from the database', db_bars);
+
+    //Deleting all bars that were not in the txt file but were in the database
+    for(var k = 0; k<db_bars.length; k++)
+    {
+      databaseInterface.deleteBar(db_bars[k].name);
+    }
+
+  };*/
+
  /**
- * Updates all of the bars
+ * Updates all of the bars with information from facebook and removes bars from the database that were not in the txt file
  * 
  */
   self.updateBars = function() {
@@ -162,34 +163,7 @@ var dataManager = function() {
         function handleBars(db_bars)
         {
 
-          var missingBarsInDb = [];
-          //var missingBarsInTxt = [];
-          for(var i = 0; i<bars.length; i++)
-          {
-            var indice = barIndice(db_bars,bars[i].name);
-            if(indice < 0) //Found a object that exists in text file but not database
-            {
-              missingBarsInDb.push(bars[i].name);
-              bars.splice(i,1);
-              i--;
-            }
-            else
-            {
-              db_bars.splice(indice,1);
-              //missingBarsInTxt.push(bars[i]);
-            }
-            
-          }
-
-          //console.log('these are the bars that are missing in the database: ', missingBarsInDb);
-          //console.log('these are the bars that are about to be removed from the database', db_bars);
-
-          //Deleting all bars that were not in the txt file but were in the database
-          for(var k = 0; k<db_bars.length; k++)
-          {
-            databaseInterface.deleteBar(db_bars[k].name);
-          }
-
+          //removeOldBars(bars,db_bars);
 
           for(var i = 0; i<bars.length; i++)
           {
@@ -205,6 +179,7 @@ var dataManager = function() {
 
     
     fbManager.update('bars',updateBars);
+    googleManager.updateRatings();
     self.updateEvents();
   };
 
@@ -236,9 +211,6 @@ var dataManager = function() {
   * @returns {boolean} - Returns whether event has passed or not
   */
   function dateHasPassed(event) {
-    //console.log('checking the following event:');
-    //console.log(event);
-    //console.log('checking for date!');
     var endTime = event.endTime;
     if(endTime === undefined || event.endTime === '')
     {
@@ -257,8 +229,6 @@ var dataManager = function() {
       endTime = Date.parse(endTime);
     }
 
-    //console.log()
-    //console.log('time recieved from event: ' + endTime);
     var currentDate = new Date();
     var currentTime = currentDate.getTime();    
 
@@ -273,7 +243,7 @@ var dataManager = function() {
   *
   * @returns {integer} - Returns the indice of the bar object or -1 if it was not found
   */
-  function barIndice(db_bars,bar){
+  /*function barIndice(db_bars,bar){
     for(var i = 0; i<db_bars.length; i++)
     {
       if(db_bars[i].name === bar)
@@ -283,7 +253,7 @@ var dataManager = function() {
     }
 
     return -1;
-  };
+  };*/
 
     /**
  * Parses a bar object so that it can be inserted into the database 

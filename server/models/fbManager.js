@@ -33,10 +33,8 @@ var fbManager = function() {
 
   //Calls Facebook Graph Api and gathers information into an array
   self.fetchEvents = function(callback) {
-    console.log('MADE IT TO FETCH EVENTS');
-  	let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
-    //https://notendur.hi.is/~dap8/rvk/bars4.txt
-    //let barList = fs.readFileSync('https://notendur.hi.is/~dap8/rvk/bars4.txt').toString().split('\n');
+    let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
+    
     let barInfo = [];
     let events = [];
     var searchQuery;
@@ -108,7 +106,7 @@ var fbManager = function() {
         if(response.cover!= undefined) coverPic = response.cover.source;
         barDetails.push({
         	name: fbBarName,
-            about: response.about,
+          about: response.about,
         	description: response.description,
         	opening_hours: response.hours,
         	cover: coverPic

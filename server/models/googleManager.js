@@ -1,16 +1,14 @@
-var barGetter = function(databaseInterface) {
+var googleManager = function(databaseInterface) {
     var self = this;
     const db = databaseInterface;
-    var fs = require('fs');
-    const API_KEY = 'AIzaSyCzwZgG3X-ZMs2elJi9Bn_l5YgYtvszJBw';
+    const fs = require('fs');
+    const API_KEY1 = 'AIzaSyCzwZgG3X-ZMs2elJi9Bn_l5YgYtvszJBw';
     const API_KEY2 = 'AIzaSyBk4gNUr3H9-fI9wrv9GwGv9NKneKH500E';
-
-    /*var barList = fs.readFileSync('./bars.txt').toString().split('\n');
-    for(var i = 0; i<barList.length; i++)
-    {
-      barList[i] = barList[i].replace(/\r/, "");
-    }*/
-
+    const PLACE_COORDS = {
+        lat : 64.14583609,
+        lng : -21.93030953,
+    }
+    const PLACE_RADIUS = 10000;
 
     var GooglePlaces = require('google-places');
 
@@ -20,25 +18,44 @@ var barGetter = function(databaseInterface) {
         key: API_KEY2,
     });
 
-    self.loadInitialBarData = function() {
-        console.log('called load initial bar data');
-        console.log('CALLED loadInitialBarData');
-
-        //console.log(googleMapsClient);
+    /**
+    * Fetches bar names and basic information about them in a PLACE_RADIUS around PLACE_COORDS from the google places api
+    *  
+    * @param {callback} getFacebookInfo - A callback that updates the bars with the rest of the information
+    */
+    self.loadInitialBarData = function(getFacebookInfo) {
+        console.log('called load initial bar data');        
+        let barCounter = 0;
+        //Fetching bar names listed in the text file
+        let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
+        let barNameList = [];
+        let barInfo = [];
+        for(var i = 0; i<barList.length; i++)
+        {
+            barList[i] = barList[i].replace(/\r/, "");
+            barInfo.push(barList[i].split(':'));
+            barName = barInfo[i][0];
+            barNameList.push(barName);
+        }
+        
         //name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, photo: 9
         googleMapsClient.placesRadar({
             language: 'en',
-            location: [64.14583609, -21.93030953],
-            radius: 10000,
+            location: [PLACE_COORDS.lat, PLACE_COORDS.lng],
+            radius: PLACE_RADIUS,
             type: 'bar',
         }, function(err, response) {
             if (!err) {
-                //console.log(response.json.results);
+                
                 var barsFound = response.json.results;
-                //console.log(barsFound.length);
+                function barHasBeenInserted(){
+                    console.log('barCounter: ' + barCounter);
+                    barCounter++;
+                    if(barCounter >= barNameList.length) getFacebookInfo();
+                }
 
                 for (var i = 0; i < barsFound.length; i++) {
-                    //console.log('calling for details');
+                    
                     places.details({
                         reference: barsFound[i].reference
                     }, function(err, response) {
@@ -46,8 +63,7 @@ var barGetter = function(databaseInterface) {
                         {
                             //console.log('error recieved!!',err);
                         }
-                        console.log('response: ',response);
-                        //console.log('made it to call');
+                                                
                         var parsedCoords = JSON.stringify(response.result.geometry.location);
                         var bar = {
                             name: response.result.name,
@@ -70,8 +86,9 @@ var barGetter = function(databaseInterface) {
                                 }
                             }
                         }
-                        db.insertBar(bar);
-                        console.log('inserting the following bar', bar);
+                        if(barIsListed(bar.name,barNameList)) db.insertBar(bar,barHasBeenInserted);
+                        
+                        //console.log('inserting the following bar', bar);
                     });
                 }
 
@@ -82,13 +99,16 @@ var barGetter = function(databaseInterface) {
     };
 
 
-
+    /**
+    * Updates the ratings of the bars
+    *      
+    */
     self.updateRatings = function() {
 
         googleMapsClient.placesRadar({
             language: 'en',
-            location: [64.14583609, -21.93030953],
-            radius: 10000,
+            location: [PLACE_COORDS.lat, PLACE_COORDS.lng],
+            radius: PLACE_RADIUS,
             type: 'bar',
         }, function(err, response) {
             if (!err) {
@@ -104,7 +124,6 @@ var barGetter = function(databaseInterface) {
                         //console.log('made it to call');                        
                         var bar = {
                             name: response.result.name,
-                            coords: parsedCoords,
                             rating: response.result.rating,
                         }
                         for (property in bar) {
@@ -117,7 +136,7 @@ var barGetter = function(databaseInterface) {
                             }
                         }
                         db.updateBar(bar);
-                        console.log('inserting the following bar', bar);
+                        
                     });
                 }
             }
@@ -126,8 +145,19 @@ var barGetter = function(databaseInterface) {
     };
 
 
+    function barIsListed(bar_name,bar_name_list)
+    {
+        for(var i = 0; i<bar_name_list.length; i++)
+        {
+            if(bar_name_list[i] === bar_name) return true;
+        }
+
+        return false;
+    }
+
+
 };
 
 
 
-module.exports = barGetter;
+module.exports = googleManager;
