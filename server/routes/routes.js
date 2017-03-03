@@ -5,7 +5,8 @@ const dataManager = new datamanagerModule();
 const NanoTimer = require('nanotimer');
 const timer = new NanoTimer();
 const updateInterval = '21600s';
-dataManager.init();
+//const testInterval = '5s';
+dataManager.fetchData();
 initializeUpdatingSchedule();
 
 
@@ -36,9 +37,14 @@ router.post('/api/bars',function(req, res, next){
   });
 });
 
+
+/**
+* Updates the bars and events information every 6 hours
+*
+*/
 function initializeUpdatingSchedule()
 {
-	timer.setInterval((function() {dataManager.init();}), '', updateInterval);
+	timer.setInterval((function() {dataManager.fetchData();}), '', updateInterval);
 }
 
 

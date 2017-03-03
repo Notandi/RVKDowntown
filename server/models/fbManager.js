@@ -71,8 +71,7 @@ var fbManager = function() {
           events: bar
         })
         //When all responses have been recieved we make the callback.
-        if(countResponseEvents >= barList.length) {
-          console.log('got responses for all bars(events)');
+        if(countResponseEvents >= barList.length) {          
           callback(events);
         }
       });
@@ -113,8 +112,7 @@ var fbManager = function() {
         });
         countResponseBars++
         //When all responses have been recieved we make the callback.
-        if(countResponseBars >= barList.length) {
-          console.log('got responses for all bars(barinfo)');
+        if(countResponseBars >= barList.length) {          
           callback(barDetails);
         }
       });

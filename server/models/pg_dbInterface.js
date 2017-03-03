@@ -50,8 +50,7 @@ var pg_dbInterface = function() {
               //throw POOL_ERROR;
 
               return console.error('error fetching client from pool', err);
-            }
-            console.log('called getBars');
+            }            
             var bars = [];
 
             var params = [];
@@ -414,9 +413,7 @@ var pg_dbInterface = function() {
             //Getting rid of the extra comma at the end
             statement = statement.substring(0, statement.length-1);
             statement += ' WHERE name = $'+barColumns.length;
-
-            console.log('statement about to be executed: ' + statement);
-            
+                        
             var checkIfBarExists = 'SELECT * FROM BARS WHERE name = $1';
             var checkQuery = client.query(checkIfBarExists,[bar.name]);
             var bars = [];

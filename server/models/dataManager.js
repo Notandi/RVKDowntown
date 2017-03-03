@@ -13,10 +13,11 @@ var dataManager = function() {
    * Fills the database with bars if it is empty
    *  
    */ 
-  self.init = function(){
+  self.fetchData = function(){    
     function loadData(bar_ids)
     {
       if(bar_ids.length === 0) googleManager.loadInitialBarData(self.updateBars);
+      else self.updateBars();
     }
     self.getBarIds(loadData);
   };
@@ -87,9 +88,7 @@ var dataManager = function() {
   self.updateEvents = function() {
     console.log('MADE IT TO UPDATE EVENTS');
     function insertEvents(bars){
-      console.log('MADE IT TO INSERT EVENTS!!');
-      //console.log(events);
-      //console.log('events length: ' + events.length);
+      
       function handleBarIds(bar_ids)
       {
         function addEvents(db_bars)
