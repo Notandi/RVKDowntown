@@ -32,9 +32,14 @@ router.get('/api/ids', function(req, res, next){
 */
 router.post('/api/bars',function(req, res, next){
   var ids = req.body;
-  dataManager.getBars( ids, (bars) => {
+  if(ids.constructor === Array)
+  {
+  	dataManager.getBars( ids, (bars) => {
       res.send(bars);
   });
+
+  }
+  
 });
 
 

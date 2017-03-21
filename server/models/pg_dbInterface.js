@@ -247,7 +247,7 @@ var pg_dbInterface = function() {
               else
               {
                 barData[insertOrder[property]] = bar[property];
-              }                
+              } 
             }
 
             //client.query(statement,barData);
