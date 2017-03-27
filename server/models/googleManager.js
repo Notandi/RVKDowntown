@@ -13,6 +13,7 @@ var googleManager = function(databaseInterface) {
     var GooglePlaces = require('google-places');
 
     var places = new GooglePlaces(API_KEY2);
+    //retry 3
 
     var googleMapsClient = require('@google/maps').createClient({
         key: API_KEY2,
@@ -48,8 +49,7 @@ var googleManager = function(databaseInterface) {
             if (!err) {
                 
                 var barsFound = response.json.results;
-                function barHasBeenInserted(){
-                    console.log('barCounter: ' + barCounter);
+                function barHasBeenInserted(){                    
                     barCounter++;
                     if(barCounter >= barNameList.length) getFacebookInfo();
                 }
@@ -61,7 +61,8 @@ var googleManager = function(databaseInterface) {
                     }, function(err, response) {
                         if(err)
                         {
-                            //console.log('error recieved!!',err);
+                            console.log('error recieved!!',err);
+                            return;
                         }
                                                 
                         var parsedCoords = JSON.stringify(response.result.geometry.location);
@@ -121,6 +122,11 @@ var googleManager = function(databaseInterface) {
                     places.details({
                         reference: barsFound[i].reference
                     }, function(err, response) {
+                        if(err)
+                        {
+                            console.log('error recieved!!',err);
+                            return;
+                        }
                         //console.log('made it to call');                        
                         var bar = {
                             name: response.result.name,

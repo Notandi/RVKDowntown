@@ -80,6 +80,7 @@ var pg_dbInterface = function() {
                     coords : parsedCoords,
                     link: row.link,
                     description: row.description,
+                    about: row.about,
                     rating: row.rating,
                     opens: parsedOpens,
                     closes: parsedCloses,
@@ -382,6 +383,8 @@ var pg_dbInterface = function() {
               return console.error('error fetching client from pool', err);
             }
 
+            console.log('updating database with this link: ',bar.link);
+            
             var insertOrder = {name: 0, menu: 1, image: 2, coords: 3, link: 4, description: 5, rating: 6, opens: 7, closes: 8, about: 9};
             var barColumns = [];
             var barData = [];
@@ -392,6 +395,8 @@ var pg_dbInterface = function() {
                 barData[insertOrder[property]] = bar[property];
               }              
             }
+
+
 
             //Removing undefined variables from arrays, in case a full bar object was not given
             for (var i = 0; i < barColumns.length; i++) {

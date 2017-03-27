@@ -288,6 +288,7 @@ var dataManager = function() {
       image: obj.cover,
       description: obj.about,      
       about: obj.about,
+      link: obj.link,
     }
 
     return bar;

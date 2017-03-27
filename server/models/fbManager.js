@@ -33,8 +33,8 @@ var fbManager = function() {
 
   //Calls Facebook Graph Api and gathers information into an array
   self.fetchEvents = function(callback) {
-    console.log('MADE IT TO FETCH EVENTS');
-  	let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
+    let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
+    
     let barInfo = [];
     let events = [];
     var searchQuery;
@@ -71,8 +71,7 @@ var fbManager = function() {
           events: bar
         })
         //When all responses have been recieved we make the callback.
-        if(countResponseEvents >= barList.length) {
-          console.log('got responses for all bars(events)');
+        if(countResponseEvents >= barList.length) {          
           callback(events);
         }
       });
@@ -82,7 +81,7 @@ var fbManager = function() {
 
   //Calls Facebook Graph Api and gathers information into an array
   self.fetchBars = function(callback) {
-  	let fields = {"fields":"about,description,hours,cover,link"};
+  	let fields = {"fields":"about,description,hours,cover"};
 
     //Read text file which contains bar names
     let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
@@ -102,20 +101,25 @@ var fbManager = function() {
           //console.log(!res ? 'error occurred' : res.error);
         // }
 
-        var coverPic = undefined
+
+
+        let coverPic = undefined;
+        let fbLink = undefined;
+        if(response.id !== undefined) fbLink = 'https://www.facebook.com/'+response.id;
         if(response.cover!= undefined) coverPic = response.cover.source;
         barDetails.push({
         	name: fbBarName,
           about: response.about,
         	description: response.description,
         	opening_hours: response.hours,
-          fbPageLink: res.events.data[i].link,
-        	cover: coverPic
+        	cover: coverPic,
+          link: fbLink,
         });
+        console.log('this is our link at this point: ', barDetails[countResponseBars].link);
         countResponseBars++
-        //When all responses have been recieved we make the callback.
-        if(countResponseBars >= barList.length) {
-          console.log('got responses for all bars(barinfo)');
+        //When all responses have been recieved we call the callback.
+        if(countResponseBars >= barList.length) {    
+          console.log('finished with this count: ' + countResponseBars);
           callback(barDetails);
         }
       });
