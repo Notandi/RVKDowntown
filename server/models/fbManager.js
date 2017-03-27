@@ -38,7 +38,7 @@ var fbManager = function() {
     let barInfo = [];
     let events = [];
     var searchQuery;
-    var fields = {"fields":"events{start_time,end_time,id,name,attending_count}"}
+    var fields = {"fields":"events{start_time,end_time,id,name,link,attending_count}"}
 
     for(var i = 0; i<barList.length; i++){
       barList[i] = barList[i].replace(/\r/, "");
@@ -62,6 +62,7 @@ var fbManager = function() {
               guests : res.events.data[i].attending_count,
               startTime : res.events.data[i].start_time,
               endTime : res.events.data[i].end_time,
+              fbPageLink: res.events.data[i].link
               venue : fbBarName,
             });
           }
