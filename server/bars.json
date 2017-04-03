@@ -1,9 +1,13 @@
 {
   "Stúdentakjallarinn": {
-    "feedback": "Vel gert! Ekki svo flókið.\r\n Svona virkar tölur í mjög grófum dráttum. Heiltölur eru alltaf heilar (t.d. 1 eða 20) á meðan fleytitölur geta haft brot (t.d. 1.5 eða 10.0). Þú reiknaðir töluna:",
-    "path": "lessonone",
-    "instructions": "Strengir er einfaldlega bara texti sem getur líka verið með tölum. Strengir eru afmarkaðir af gæsalöppum sitthvoru megin (t.d. \"Rófa\" eða \"Ég hef 2 rófur.\"). Hægt er að beita + virkjanum á strengi líka en það setur strengina einfaldlega saman í einn streng. Prófaðu að setja saman tvo strengi.",
-    "lessonFunction": "lessonStart(req.body.codeFromUser)"
+    "description": "Vel gert! Ekki svo flókið.\r\n Svona virkar tölur í mjög grófum dráttum. Heiltölur eru alltaf heilar (t.d. 1 eða 20) á meðan fleytitölur geta haft brot (t.d. 1.5 eða 10.0). Þú reiknaðir töluna:",
+    "image": "lessonone",
+    "link": "Strengir er einfaldlega bara texti sem getur líka verið með tölum. Strengir eru afmarkaðir af gæsalöppum sitthvoru megin (t.d. \"Rófa\" eða \"Ég hef 2 rófur.\"). Hægt er að beita + virkjanum á strengi líka en það setur strengina einfaldlega saman í einn streng. Prófaðu að setja saman tvo strengi."
   },
+  "Húrra": {
+  	"description" : "This bar is goood",
+  	"image": "www.blbalbal.com",
+  	"link": "hurra.is"
+  }
 }
 
