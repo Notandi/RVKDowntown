@@ -33,7 +33,7 @@ var fbManager = function() {
 
   //Calls Facebook Graph Api and gathers information into an array
   self.fetchEvents = function(callback) {
-    let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
+    let barList = fs.readFileSync('./bar_pages.txt').toString().split('\n');
     
     let barInfo = [];
     let events = [];
@@ -84,7 +84,7 @@ var fbManager = function() {
   	let fields = {"fields":"about,description,hours,cover"};
 
     //Read text file which contains bar names
-    let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
+    let barList = fs.readFileSync('./bar_pages.txt').toString().split('\n');
     let barInfo = [];
     let barDetails = [];
     let searchQuery;
