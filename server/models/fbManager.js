@@ -107,17 +107,25 @@ var fbManager = function() {
 
         let coverPic = undefined;
         let fbLink = undefined;
+        let descr = undefined;
+        let pic = undefined;
         if(response.id !== undefined) fbLink = response.id;
         if(response.cover!= undefined) coverPic = response.cover.source;
+        if(barsObj[fbBarName] != undefined)
+        {          
+         descr = barsObj[fbBarName].description;
+         console.log('DESCRIPTION IS NOT DEFINED');
+        }
+        if(barsObj[fbBarName] != undefined) pic = barsObj[fbBarName].image;
         barDetails.push({
         	name: fbBarName,
-          about: response.about,
-        	description: barsObj[fbBarName],
+          about: descr,
+        	description: descr,
         	opening_hours: response.hours,
-        	cover: barsObj[fbBarName],
+        	cover: pic,
           link: fbLink,
         });
-        console.log('this is our link at this point: ', barDetails[countResponseBars].link);
+        //console.log('this is our link at this point: ', barDetails[countResponseBars].link);
         countResponseBars++
         //When all responses have been recieved we call the callback.
         if(countResponseBars >= barList.length) {    

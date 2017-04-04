@@ -178,7 +178,7 @@ var dataManager = function() {
 
     
     fbManager.update('bars',updateBars);
-    googleManager.updateRatings();
+    //googleManager.updateRatings();
     self.updateEvents();
   };
 

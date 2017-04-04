@@ -24,7 +24,7 @@ Port9:portniu
 Ölstofan:117355128342829
 Hotel Borg by Keahotels:hotelborg
 Kaldi Bar:KaldiBarCafe
-B5:B5
+B5:202198523132726
 Lavabarinn:lavabarinn
 Pablo discobar:discobarrvk
 The Icelandic Rockbar:isrokkbar
@@ -37,7 +37,6 @@ Lebowski Bar:Lebowskibar-156528837802169
 Ölhúsið:olhusid
 Austur:austurclub
 The Laundromat Cafe:LaundromatCafeReykjavik
-Kolabrautin Ristorante:kolabrautin
 Kíkí Queer Bar:524995824201595
 Bjórgarðurinn:bjorgardurinn
 Kol Restaurant:kolrestaurant
@@ -46,7 +45,6 @@ The Drunk rabbit - Irish Pub:drunkrabbit.is
 Íslenski barinn:islenski
 Solon Bistro:solonbistro
 Gaukurinn:gaukurinn2014
-Bravó:Bravó-55215416815
 Jacobsen Loftið:loftidbar
 Skúli Craft Bar:skulicraft
 Rauða Ljónið:85663302518
