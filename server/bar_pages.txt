@@ -1,4 +1,3 @@
-Fosshotel Baron:Fosshotel
 Stúdentakjallarinn:Studentakjallarinn
 Stofan Café:stofan.cafe
 Dillon:DillonWhiskeyBar
@@ -28,19 +27,16 @@ Kaldi Bar:KaldiBarCafe
 B5:B5
 Lavabarinn:lavabarinn
 Pablo discobar:discobarrvk
-Kaffi Klassik Kringlunni:kaffiklassik.kringlunni
 The Icelandic Rockbar:isrokkbar
 Húrra:hurra.is
 Classic sportbar:Classic-Rock-Sportbar-168902929793726
 Paloma bar:BarPaloma
 Gamla vínhúsið:Gamla-Vínhúsið-177073739006759
-Fosshótel Reykjavík:Fosshotel-Reykjavik
 Grillmarkaðurinn:Grillmarkaðurinn-206006059427078
 Lebowski Bar:Lebowskibar-156528837802169
 Ölhúsið:olhusid
 Austur:austurclub
 The Laundromat Cafe:LaundromatCafeReykjavik
-Kolabrautin Ristorante:kolabrautin
 Kíkí Queer Bar:Kiki-queer-bar-524995824201595
 Bjórgarðurinn:bjorgardurinn
 Kol Restaurant:kolrestaurant
@@ -49,7 +45,6 @@ The Drunk rabbit - Irish Pub:drunkrabbit.is
 Íslenski barinn:islenski
 Solon Bistro:solonbistro
 Gaukurinn:gaukurinn2014
-Bravó:Bravó-55215416815
 Jacobsen Loftið:loftidbar
 Skúli Craft Bar:skulicraft
 Rauða Ljónið:Rauða-Ljónið-85663302518
@@ -64,8 +59,6 @@ Café Paris:cafeparis.is
 Kex Hostel Reykjavik:KexHostel
 Danski barinn:dendanskekro
 Kaffibarinn:kaffibarinn
-Íslenska Hamborgarafabrikkan:fabrikkan
-Turninn Restaurant:turninnrestaurant
 Frederiksen Ale House:frederiksenalehouse
 Kitchen & Wine:kitchenandwine
 Spot:spot.kopavogi

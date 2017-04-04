@@ -1,13 +1,262 @@
 {
   "Stúdentakjallarinn": {
-    "description": "Vel gert! Ekki svo flókið.\r\n Svona virkar tölur í mjög grófum dráttum. Heiltölur eru alltaf heilar (t.d. 1 eða 20) á meðan fleytitölur geta haft brot (t.d. 1.5 eða 10.0). Þú reiknaðir töluna:",
-    "image": "lessonone",
-    "link": "Strengir er einfaldlega bara texti sem getur líka verið með tölum. Strengir eru afmarkaðir af gæsalöppum sitthvoru megin (t.d. \"Rófa\" eða \"Ég hef 2 rófur.\"). Hægt er að beita + virkjanum á strengi líka en það setur strengina einfaldlega saman í einn streng. Prófaðu að setja saman tvo strengi."
+    "description": "The Student Cellar is open for everyone! It was opened in January at Háskólatorg, 1st floor. The „old“ Student Cellar was located at Hringbraut from 1975 until 2007. The Icelandic Student Services own and manage the Student Cellar. ",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/15843948_1527683627256623_4384626029408489600_o.jpg?oh=f38125914ae38dd98e0f5e56a7379912&oe=599650EB"
+  },
+  "Stofan Café": {
+    "description": "Stofan Café is a cozy café in the centre of Reykjavík.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/10406347_754469271290335_5838713191089619062_n.jpg?oh=6ebf21f313bf0142e70b0e2296042aa4&oe=595133E0"
+  },
+  "Dillon": {
+    "description": "Whiskey bar with Over 150 whiskeys, live music thu to sat and the legendary Dj Andrea on weekends! Happy hour every day from 16:00 to 20:00. Big backyard",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/14053940_10154650492184384_2611471576442690598_o.jpg?oh=50900cf8a1b9bd70f52a8fb7df295a2b&oe=5996AFE0"
+  },
+  "Satt Restaurant": {
+    "description": "Restaurant and bar situated in Icelandair's Reykjavík Natura Hotel",
+    "image": "http://thetravelhack.com/wp-content/uploads/2015/08/Satt-Bar-Reykjavik-Natura-Hotel-.jpg"
+  },
+  "Bar 11": {
+    "description": "The rock hangout, be it live music or the riff-heavy jukebox.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/13483383_1239993499346408_3602283001626085480_o.jpg?oh=e47045e2fb7bfd5ca086bf6dedb63b32&oe=598D72AC"
+  },
+  "Kringlukráin": {
+    "description": "Bar and grill located in the kringlan mall",
+    "image": "http://veitingastadir.is/wp-content/uploads/2015/02/kringlukr%C3%A1in-img-3-864x576.jpg"
+  },
+  "Slippbarinn": {
+    "description": "Slippbarinn is effectively the birthplace of the Reykjavik cocktail culture. Established in 2012 within the Icelandair Hotel Reykjavík Marina, it was the first bar in the city to focus on fresh, high-quality cocktails. These past years we have seen a cocktail revolution in Iceland with more and more high-level bars and establishments opening with a focus on hand-crafted cocktails, but Slippbarinn is still regarded as one of the most respected bars in town. The food and drinks are based on a classic foundation with a twist where emphasis is on fresh ingredients, interesting flavours and bold presentation.",
+    "image": "https://www.slippbarinn.is/static/gallery/slippbarinn-1/md/atomic-pineapples.jpg"
+  },
+  "Kofinn": {
+    "description": "Kofinn is a comfortably sized café that transforms into a great bar and club on the weekends. Food and desserts are served daily from opening until 22:00.",
+    "image": "http://www.reykjavikroyal.com/static/images/kofinn1.jpg"
+  },
+  "The Dubliner": {
+    "description": "An irish pub in the heart of Reykjavík",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/411871_391979457518497_933939655_o.jpg?oh=03438fd9c0d610fc1f758e7b4ea05d85&oe=595CFC92"
+  },
+  "Bjarni Fel Sportbar": {
+    "description": "#1 SPORTSBAR IN REYKJAVÍK. The reason why Bjarni Fel is the nr 1 sports bar in Reykjavík is simple - We have it all and you can always count on us. Ask anybody in Reykjavík where you should go to see your favorite team play or watch your favorite sport and they will point you our way. Located on the main street downtown Bjarni Fel has over 20 New High Definition Smart tv´s and 5 HD Projectors that can simultaneously broadcast 8 different sports from over 1800 channels including \"pay per view\" events like Super Bowl Sunday and UFC.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/11427247_965611640137182_2270841407707243560_n.jpg?oh=1aad84eeeb6ff850d4199237b02088a0&oe=594C7487"
+  },
+  "Veðurbarinn / Veður Bar & Café": {
+    "description": "Cocktails, wine and Beer. Veður is Icelandic for weather. We never tire of discussing the constantly changing weather. Blizzards bringing out camaraderie among strangers stuck in the snow or the ecstatic joy of a rare warm day. Please, join the conversation over a drink.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/15972442_1130953233688646_5552942532595925866_o.jpg?oh=0d3cae8655a79221efa1cd15c9ce787f&oe=59932F65"
+  },
+  "Quest - Hair, Beer & Whisky Saloon": {
+    "description": "Quest - Hair, Beer & Whisky Saloon specializes in Whisky and beer experiences for groups. We offer our beer and whisky “Guided Trails Menu” along side tailor-making Special “tours of the palate”. On the bar you can find a fine selection of outstanding whisky from all over the world and taste a wide selection of handcrafted beer. We emphasise on taking excellent care of our patrons with personal service",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/13331003_1108207622570322_2172437194605490740_n.jpg?oh=c2ed98a15c64b320eb7a19244cec69cb&oe=595F047D"
+  },
+  "Ölsmiðjan Bar/Cafe": {
+    "description": "An Icelandic dive bar with low beer prices and decent ambience.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/12819250_1034988366542778_7699848494245475992_o.jpg?oh=12c54480879a8888680d8e00edf2dc52&oe=599AB015"
+  },
+  "Le Bistro": {
+    "description": "Le bistro is an authentic French bistro and wine/charcuterie bar in the heart of Reykjavík.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/14066283_818649228236965_6526906856932052958_o.jpg?oh=a47def4a1c62844fe6ec7d09e82849c0&oe=5996EC0F"
+  },
+  "Bar Ananas": {
+    "description": "Visit Iceland´s one and only Beach-Bar in downtown Reykjavík.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/1463268_363430107171948_6702777533958936889_n.jpg?oh=827d73342c1a15f5d848c04a6f2c58d9&oe=5951AE24"
+  },
+  "Græna Herbergið / The Green Room": {
+    "description": "The Green Room is a new Piano Cocktail Club located in the heart of Reykjavík.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/16299172_1868139856731403_9215438871550958839_n.jpg?oh=5c4d9326f3266779d614b556f7ad199f&oe=595EEBE7"
+  },
+  "Barber Bar": {
+    "description": "The Barber Bistro bar is a trendy restaurante located under a very exclusive 4 stars hotel who offer you a nice dinner and cocktails every day",
+    "image": "https://aldahotel.is/wp-content/themes/alda/assets/images/front/bar.jpg"
+  },
+  "American Bar": {
+    "description": "The only American bar in Iceland",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/16508031_594424350744562_1127724200343290716_n.jpg?oh=baf9551b3fa6099e129ce2a4d4480698&oe=594F2D31"
+  },
+  "Kaffibrennslan": {
+    "description": "Café and wine in the center of Reykjavik.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/17021935_1018315661646423_2627900525898713105_n.jpg?oh=c4a194a0b013a5819af37976cb05f256&oe=599157BA"
+  },
+  "Búalfurinn": {
+    "description": "A local sports bar",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/14409413_1255192284493768_4436179115850353006_o.jpg?oh=d7a3932464e46092132da1029e76d5dd&oe=595EB065"
+  },
+  "Kaffihús Vesturbæjar": {
+    "description": "Food from dawn to dusk. Beer, wine and incredible coffee ",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/11164754_405516379628569_1495540027017954828_o.jpg?oh=dc7e2c71d70d8d94915dfc92794fe3a8&oe=598F26BC"
+  },
+  "Boston": {
+    "description": "Boston - more than a feeling",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/15110414_456671701123756_8179961504970026186_o.jpg?oh=61676afbcaef1507e50ced59c9a94e4a&oe=598E8FD4"
+  },
+  "Port9": {
+    "description": "Be ready to be spoilt by great service and distinct choices of culinary experiences at Reykjavik most prominent location. Under the helm of Gunnar Páll Rúnarsson PORT 9 combines selected wines and unique blend of appetizers made with the freshest seasonal ingredients.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/17426335_1869760546594879_6199990838850680918_n.jpg?oh=e5f7e59e1cd6678f53ab1aea8e1f1e5d&oe=5995E4E6"
+  },
+  "Ölstofan": {
+    "description": "Great local place in downtown Reykjavík, great vibe, great tunes. Go enjoy a Bríó.",
+    "image": "http://www.mbl.is/tncache/static/730x/generic/2016/01/07/10703604_346185722219359_8423643457983433739_n.jpg"
+  },
+  "Hotel Borg by Keahotels": {
+    "description": "A hotel bar in the heart of Reykjavík",
+    "image": "http://themoderntraveler.com/test/wp-content/uploads/2015/11/hotel-borg-bar-2.jpg"
+  },
+  "Kaldi Bar": {
+    "description": "A bar/café in downtown Reykjavík",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/17523162_1474251415979979_7689658272259275795_n.jpg?oh=9947eed7f6bfd5f60e758fed2f61db00&oe=59938C6F"
+  },
+  "B5": {
+    "description": "A popular bar/bistro in the heart of Reykjavík",
+    "image": "https://d8ys5mrbqhmjx.cloudfront.net/reykjavik/companies/b5-bar-bistro/large/b5-bar-bistro-240351.jpg"
+  },
+  "Lavabarinn": {
+    "description": "Cocktail Bar with a refined attention to detail, and a nightclub in the basement!",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/10320564_517603635008346_7767024931761254788_n.jpg?oh=78cb581419328502daee4c5e3ff23230&oe=599276AA"
+  },
+  "Pablo discobar": {
+    "description": "Pablo is so corny that he is cool, with him you will have a great time and lots of juicy cocktails",
+    "image": "https://media-cdn.tripadvisor.com/media/photo-s/0d/54/c2/7f/our-beautiful-and-talented.jpg"
+  },
+  "The Icelandic Rockbar": {
+    "description": "The home bar of rock in the home town of rock",
+    "image": "http://icelandmonitor.mbl.is/tncache/static/750x/generic/2015/04/28/1926786_309941805868368_5656063777386719320_n.jpg"
   },
   "Húrra": {
-  	"description" : "This bar is goood",
-  	"image": "www.blbalbal.com",
-  	"link": "hurra.is"
-  }
+    "description": "Reykjavík's prime live music venue and the place to have a great night out.",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/14953884_1118542558262609_108828447942144633_n.jpg?oh=d60599deb2354ad7959a9c32dd1c09c5&oe=59982099"
+  },
+  "Classic sportbar": {
+    "description": "A classic bar with lots of beer and sports",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/522963_541792169171465_1148642734_n.jpg?oh=4cda32ef076189bfc4a8c7587faaa6d8&oe=5998DDCC"
+  },
+  "Paloma bar": {
+    "description": "Founded in 2013, by Jon Palmar Sigurdsoon (Palli). Paloma is the only Nightclub in Reykjavik.Since then, the place has been the main venue for local DJ's and not only.Many have considered Paloma as the heir of Reykjavik's legendary bar, Bakkus, which was owned by Palli.Since March (2017), Paloma has been acquired by two of Palli's friends, Jasmin Rexhepi and Steve Roberts.The club fits 140 people and sits on top of the house, above The Dubliner, which is one of the oldest pub in Reykjavik.The whole house fits 330 people and with three speareted venues, Paloma, The Dubliner and Jazz N' Steve Cellar.",
+    "image": "https://i1.wp.com/nickydigital.com/wp-content/uploads/2014/11/20141104_8751.jpg"
+  },
+  "Gamla vínhúsið": {
+    "description": "Friendly Restaurant in the heart of Reykjavík. We serve local dishes like horse, whale and traditional meat soup.",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/17203217_264687870638098_4529172415864245830_n.jpg?oh=acf24c84617fa1602451d7220f37354e&oe=599539CD"
+  },
+  "Grillmarkaðurinn": {
+    "description": "At the heart of the culinary experience that is the Grillmarket is Iceland´s pristine nature. A close working collaboration with dedicated local farmers guarantees the very best in local produce and allows us to create a menu that´s a magical fusion of tradition and modern cuisine. Just some of the local products that feature on the menu are lamb, beef, trout, quail, skyr and honey.",
+    "image": "http://diarytraveler.com/wp-content/uploads/2015/04/Screen-shot-2015-04-29-at-9.03.11-PM.png"
+  },
+  "Lebowski Bar": {
+    "description": "Come grab a beer, delicious burger, milkshake or try our specialty 'White Russian'! Happy hour 4-7 pm. #LebowskiBar",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/10407812_637843283004053_8987368172014209754_n.jpg?oh=8f72af0c2fcd8b610a12f8a601efa75e&oe=599B3483"
+  },
+  "Ölhúsið": {
+    "description": "We offer live music all weekends, some of our best musicians will entertain guests year round. We offer live broadcasts of various sporting events such as football, MMA and boxing.",
+    "image": "http://icelandmonitor.mbl.is/tncache/static/750x/generic/2015/08/18/11836910_730620203715093_8127070493674158198_n.jpg"
+  },
+  "Austur": {
+    "description": "Since 2009 Austur is one of the hottest clubs in downtown Reykjavik.Located in Austurstraeti 7, one of the main bar- and shopping streets downtown. When you walk inside you will instantly discover why this club is so popular among locals and travelers. From flattering bathroom lighting to fabulous mosaic glass walls, Austur is all about trend, class and appeal. The beautiful people flock there for the weekend to listen to live DJ‘s and dance the night away. Dressy attire is prefered, to make sure you fit in with the crowd. At the bar you can try a wide variety of cocktails, shots, wines or beer. Groups can buy a VIP table with table service.If you‘re in the mood for a fabulous night surrounded by beauty and luxury, we suggest that you start your nightlife adventure at Austur.",
+    "image": "http://www.dv.is/media/cache/5c/f0/5cf00be83fc62e3ff7abb6200f5cf8c7.jpg"
+  },
+  "The Laundromat Cafe": {
+    "description": "We opened in 2004 in Elmegade 15 in Nørrebro, Copenhagen.The idea was to combine laundry and socializing in nice, comfortable surroundings where you could eat, drink, read, do your laundry and browse the Internet.",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/602843_499014423471100_1270659549_n.jpg?oh=9231f449eb748c41dc257a32cb94ceea&oe=5996CCDA"
+  },
+  "Kíkí Queer Bar": {
+    "description": "The Queerest club in Reykjavík! Great music, fun atmo and the best crowd! Located on second and third floor of Laugavegur 22, entrance from Klapparstígur",
+    "image": "http://img.icelandreview.com/sites/default/files/styles/scale_940/public/snapshot/klapparstigur.jpg?itok=nrVOh8oA"
+  },
+  "Bjórgarðurinn": {
+    "description": "Welcome to the Beer Garden, a great meeting place for beer lovers and foodies alike.The Beer Garden offers a multitude of good beer on tap as well as bottled beer from all over the world. We also cooperate with Icelandic breweries so we are always able to offer local and seasonal beer.We are specialists when it comes to pairing the right food with the right beer and firmly believe that beer elevates every meal. Our specialities are hand made sausages but we offer a wide array of quality bar food as well.",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/16265461_1562379317124763_7846141266773817308_n.jpg?oh=49aca6503d8e3e3568bbc05ee74fe474&oe=595FC6AF"
+  },
+  "Kol Restaurant": {
+    "description": "The cuisine is feel good comfort food with a twist on classic cuisine. The Restaurant is situated at Skólavörðustígur 40.",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/12342329_696293497139073_1212745462078227435_n.jpg?oh=6dedad8f93b788650da6caf8b7827a56&oe=59635456"
+  },
+  "Mímisbar & Lounge": {
+    "description": "Mimisbar & Lounge is a stylish locale to meet with friends or clients for drinks. The bar serves Icelandic beers and refreshing cocktails. Guests can also order coffee and light meals from Skrudur’s à la carte menu. Happy hour runs from 16:00 to 18:00. Fridays and Saturdays offer live music.",
+    "image": "https://cache.carlsonhotels.com/galleries/radblu/photos/webextra/rekzh/bar_halfmarquee/bar.jpg"
+  },
+  "The Drunk Rabbit": {
+    "description": "The Drunk Rabbit is an Irish Pub in downtown Reykjavik. Beers, whiskeys, cocktails and live music every night. Sláinte!",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/16938988_719651838204756_7658723576492817386_n.jpg?oh=369ba163ecbd312f47e115054f6f88e4&oe=595D2E4E"
+  },
+  "Íslenski barinn": {
+    "description": "Bar and restaurant serves all the Icelandic brewed beers and spirits. Here you can try out some traditional Icelandic delicacies, have an ice cold beer and listen to Icelandic music. The Icelandic Bar is not „the new trend“, rather it is a sanctuary where hospitality and menu aims to pass a standard as old as the story of the nation, the standard of the Icelandic grandmother.",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/10259748_749532148401842_2744000436523056536_n.jpg?oh=1bf3b445689bd77440ff6cefc8e5b3d3&oe=5956D92E"
+  },
+  "Solon Bistro": {
+    "description": "Sólon Bistro offers a great variety of small courses, salads, hamburgers, sandwiches and steaks in addition to fresh fish daily. Sólon Bistro is located in the city center, at the top of Bankastræti just below Skólavörðustígur. The old building that Sólon resides in is very beautiful with lovely interior design which gives the restaurant a vibrant and romantic look and feel. The second floor is for rent and more information can be found here. The wine menu is very versatile and you’ll find wines from most of the world’s renowned vineyards. Coffee, drinks, cocktails and snaps of all sorts can be found at Sólon Bistro.You’re always welcome!",
+    "image": "https://scontent.xx.fbcdn.net/v/t1.0-9/12688083_1739910812909831_5925842283770867846_n.jpg?oh=7d48077020278075bacf436fd9b0f98b&oe=5955712D"
+  },
+  "Gaukurinn": {
+    "description": "Gaukurinn is a live music venue and bar, situated in downtown Reykjavík. Concerts and events are held every day of the week, the schedule is available on our website and Facebook page. We offer a wide range of live music, mostly Icelandic bands but sometimes foreign musicians as well. All genres of music are welcome at Gaukurinn. We have Standup Comedy every Monday and Karaoke nights every Tuesday. We have a top notch sound system and stage – if you are looking for a place for your event please contact us via email: rekstrarstjori@gaukurinn.is We are open every day from 2 PM and have special daytime offers on draft beer and other drinks. Happy Hour is every day from 7 to 9 PM. We have a spacious, heated smoking area, and offer a selection of computer games and board games to our guests, free of charge. We look forward to seeing you!",
+    "image": "https://lh6.googleusercontent.com/-WjBVcHCl9Io/WJdEiIOKuhI/AAAAAAAAMvA/2FPEFrAjrOoJXsyyxb3TZej7W3RYKDsSQCLIB/w314-h168-p-k-no/"
+  },
+  "Jacobsen Loftið": {
+    "description": "We welcome your group and we can throw memorable parties. you tell us how you want your evening to be and we’ll meet your demands. Contact us and we’ll plan the most extraordinary evening. Loftið opens its doors at 2 pm every weekday and closes at 1 am. On weekends loftið is open from 4 pm to 4 am. Happy hour is from 4 pm to 8 pm.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/12107172_562618743905391_6988833591727394281_n.jpg?oh=eca246a92abb40fc4b0bdb569282c912&oe=5957158F"
+  },
+  "Skúli Craft Bar": {
+    "description": "While offering a happy hour between 2 and 7pm, Skúli Craftsbar is the best spot to start the evening/afternoon and dip into the Icelandic craft beer scene. Here you can find up to 14 different beers on tap with a strong focus on the award winning brews from the Borg brewery. The atmosphere is relaxed and warm, with a bright wooden bar and dark wood interior",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/13100704_1711921935760309_76562799510441285_n.jpg?oh=c8d1ef35fc6e7bc1dfd8974ba6a9837f&oe=599AD091"
+  },
+  "Rauða Ljónið": {
+    "description": "A sports bar in the west side of Reykjavik, the home bar of the greatest football club in Iceland, KR",
+    "image": "http://www.ljonid.is/images/morfeoshow/myndir-1119/big/_012.jpg"
+  },
+  "Mikkeller & Friends": {
+    "description": "Mikkeller is a microbrewery founded in 2006 in Copenhagen, Denmark that is based on the so-called "cuckoo", "phantom" or "gypsy" ethos; that is, the company does not operate an official brewery and, instead, collaborates with other brewers to produce their recipes or experimental one-off brews.The brewery was founded by two home brewers: Mikkel Borg Bjergsø, a high school teacher, and journalist Kristian Klarup Keller.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/13100767_1724629277804725_8514138152447028650_n.jpg?oh=d85c3ab491ec5ec058820868679297d0&oe=595A8E66"
+  },
+  "Klaustur bar": {
+    "description": "At Klaustur Bar we are dedicated to the study of wine, hops, and spirits. A klaustur, or cloister, is a quiet place to learn, reflect, and meet. We are located in the heart of Reykjavik, sheltered by the Dómkirkja and Alþingi. Serving only the highest quality products, we have a unique selection of wines, whiskeys, and gins that can only be found here in Iceland. Please join us for a tasteful evening at Klaustur",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/1936827_996141620454201_3046424389017426460_n.jpg?oh=a83a23508ad3406d6eb149100f29f862&oe=5997FE5A"
+  },
+  "Micro Bar": {
+    "description": "This is the only micro brewery bar in Iceland! You'll taste all the Icelandic brewery in the way originally intented. This is a place for people who take their beer-experience seriously!",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/16143126_1245943215493188_1773105963277158378_n.jpg?oh=11c517082cc74df6378e065bddb759a2&oe=595722AC"
+  },
+  "Sæta Svínið Gastropub": {
+    "description": "Located on the corner of Skólavörðustígur and Laugarvegur, we pride ourselves on having a great view and even better food. Our food ranges from truly authentic Japanese cuisine to the New York-style sushi that’s taking the world by storm.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/10672266_1686776394932042_4012501541694598340_n.jpg?oh=5d9c68e2a76d271aeb0746d9d140ec31&oe=595DA301"
+  },
+  "Sakebarinn": {
+    "description": "Located on the corner of Skólavörðustígur and Laugarvegur, we pride ourselves on having a great view and even better food. Our food ranges from truly authentic Japanese cuisine to the New York-style sushi that’s taking the world by storm.",
+    "image": "http://arinoa.com/wp-content/uploads/2016/04/sakebarinn-web-12-1024x569.jpg"
+  },
+  "Café Rosenberg": {
+    "description": "",
+    "image": ""
+  },
+  "Café Paris": {
+    "description": "Café Paris is located in the heart of Reykjavík, on the corner of Austurstræti and Pósthússtræti, by the famous Austurvöllur public square. Situated in a historic building the restaurant has been Icelanders’ favorite since 1992.",
+    "image": "http://www.cafeparis.is/wp-content/uploads/2015/01/cafeparis_horn2.jpg"
+  },
+  "Kex Hostel": {
+    "description": "Housed in an old biscuit factory in downtown Reykjavik furnished with salvaged materials and found objects from various places, KEX is an organic concept blending vintage industrial feel with eclectic contemporary touch.",
+    "image": "http://cms.hostelworld.com/hwblog/wp-content/uploads/sites/2/2016/06/kex5.jpg"
+  },
+  "Danski barinn": {
+    "description": "Everyday live music from 10pm & Happy Hour 4-7pm. Beer Pong every first Wednesday each month. Outdoor seating & local pub.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/1911950_282429001966636_8108509203399569781_n.jpg?oh=8372e2f56974affd2c27e24e328cf319&oe=59534EF8"
+  },
+  "Kaffibarinn": {
+    "description": "Kaffibarinn is one of the oldest bars in town. The tourist to local hipster ratio has understandably shifted in favour of the tourists in the las decade or so. But that does not seem to make Kaffibarinn any less hip. In fact it sort of adds a new level of coolness. Kaffibarinn at the weekends is an experience you will either love or hate. But if you don´t fancy the partying crowds at night, but you like the sound of Kaffibarinn´s warm, dingly charm, then check it out in the daytime for a cosy coffee or draught beers on offer.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/15193592_10154738796202866_3787815370816241977_n.jpg?oh=b0f8a1669b2522dbc484f981e046126a&oe=599AFEBC"
+  },
+  "Frederiksen Ale House": {
+    "description": "Family run Gastropub located in the heart of Reykjavík. Delicious food & great variety of beer and cocktails. Happy hour every day from 4 pm - 7 pm!",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/11130233_548092141996436_1204656773146122289_n.jpg?oh=ef80fa1cb58327c9a36972c691f590cb&oe=5999665F"
+  },
+  "Kitchen & Wine": {
+    "description": "Come and enjoy yourself at our lounge and bar in a a relaxed and comfortable atmosphere with a great personal service. We have a good selection and strive to offer both exotic and classic cocktails.Happy Hour is every day between 4 pm and 7:00 pm, so it’s ideal to stop by after work.For those that want to experience something more and get some privacy we offer the Red Room, a private room for rent, on the lower level. In there, groups can enjoy their meal and our services without being disturbed, or the room can be rented for private parties.",
+    "image": "http://kitchenandwine.is/wp-content/uploads/2014/06/lounge-01-533x595.jpg"
+  },
+  "Spot": {
+    "description": "Spot is one of the best clubs in Iceland and is well equipped in every way.The stage, sound, lights and other technical equipment is the best available. We have a packed schedule with Icelands' best entertainers all fridays and saturdays.",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/13619917_992251887559209_738763066617238814_n.jpg?oh=55525e8f664a0f2a540eeb0356efe5e9&oe=59531267"
+  },
+  "Enski barinn (English Pub)": {
+    "description": "The English Pub is the coolest place west of Laugarvegur! We always have live music, ice cold beer on tap and live football!",
+    "image": "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/12814548_10154128096773086_7648483185240393871_n.jpg?oh=6cd8a3ff12254a1d1bbb86996da77eea&oe=59986C91"
+  },
+  "Bazaar Oddsson": {
+  	"description" : "ODDSSON is designed to surprise you in a good way. It will meet your basic needs of a comfortable bed whether you prefer a bunk bed or a hotel room and a good meal made by yourself our shared kitchen or by our top chefs at quality restaurant. The devil is the details though so you will also find a yoga room, hot tubs on the rooftop, karaoke room, a café and of course a bar.",
+  	"image": "https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/s960x960/17637025_634942140038748_6358840967259983715_o.jpg?oh=4867e5fffdfc0d89eb40e70bdca42506&oe=5993901B"
+  },
 }
-
