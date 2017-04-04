@@ -13,7 +13,7 @@ Veðurbarinn / Veður Bar & Café:vedurbarinn
 Quest - Hair, Beer & Whisky Saloon:questsaloon
 Ölsmiðjan Bar/Cafe:Ölsmiðjan-201037139937909
 Le Bistro:lebistro101
-Bar Ananas:BarAnanasQuiz
+Bar Ananas:barananas.tikibar
 Græna Herbergið / The Green Room:greenroomrvk
 Barber Bar:barberbarrvk
 American Bar:AmericanBarIceland
