@@ -12,11 +12,11 @@ var googleManager = function(databaseInterface) {
 
     var GooglePlaces = require('google-places');
 
-    var places = new GooglePlaces(API_KEY2);
+    var places = new GooglePlaces(API_KEY1);
     //retry 3
 
     var googleMapsClient = require('@google/maps').createClient({
-        key: API_KEY2,
+        key: API_KEY1,
     });
 
     /**
