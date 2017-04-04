@@ -28,7 +28,7 @@ var googleManager = function(databaseInterface) {
         console.log('called load initial bar data');        
         let barCounter = 0;
         //Fetching bar names listed in the text file
-        let barList = fs.readFileSync('./bars4.txt').toString().split('\n');
+        let barList = fs.readFileSync('./bar_pages.txt').toString().split('\n');
         let barNameList = [];
         let barInfo = [];
         for(var i = 0; i<barList.length; i++)
