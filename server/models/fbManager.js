@@ -81,7 +81,9 @@ var fbManager = function() {
 
   //Calls Facebook Graph Api and gathers information into an array
   self.fetchBars = function(callback) {
-  	let fields = {"fields":"about,description,hours,cover"};
+  	let fields = {"fields":"about,description,hours,cover,id"};
+    barsJson = fs.readFileSync('./bars.json');
+    barsObj = JSON.parse(barsJson);
 
     //Read text file which contains bar names
     let barList = fs.readFileSync('./bar_pages.txt').toString().split('\n');
@@ -105,14 +107,14 @@ var fbManager = function() {
 
         let coverPic = undefined;
         let fbLink = undefined;
-        if(response.id !== undefined) fbLink = 'https://www.facebook.com/'+response.id;
+        if(response.id !== undefined) fbLink = response.id;
         if(response.cover!= undefined) coverPic = response.cover.source;
         barDetails.push({
         	name: fbBarName,
           about: response.about,
-        	description: response.description,
+        	description: barsObj[fbBarName],
         	opening_hours: response.hours,
-        	cover: coverPic,
+        	cover: barsObj[fbBarName],
           link: fbLink,
         });
         console.log('this is our link at this point: ', barDetails[countResponseBars].link);
