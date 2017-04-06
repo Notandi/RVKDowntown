@@ -58,7 +58,7 @@ var fbManager = function() {
   	      for(var i = 0; i<res.events.data.length; i++) {
             bar.push({
               name : res.events.data[i].name,
-              link : 'https://www.facebook.com/events/' + res.events.data[i].id,
+              link : res.events.data[i].id,
               guests : res.events.data[i].attending_count,
               startTime : res.events.data[i].start_time,
               endTime : res.events.data[i].end_time,
@@ -109,8 +109,10 @@ var fbManager = function() {
         let fbLink = undefined;
         let descr = undefined;
         let pic = undefined;
+        let tag = undefined;
         if(response.id !== undefined) fbLink = response.id;
         if(response.cover!= undefined) coverPic = response.cover.source;
+        if(barsObj[fbBarName] != undefined) tag = barsObj[fbBarName].about;
         if(barsObj[fbBarName] != undefined)
         {          
          descr = barsObj[fbBarName].description;
@@ -119,7 +121,7 @@ var fbManager = function() {
         if(barsObj[fbBarName] != undefined) pic = barsObj[fbBarName].image;
         barDetails.push({
         	name: fbBarName,
-          about: descr,
+          about: tag,
         	description: descr,
         	opening_hours: response.hours,
         	cover: pic,
